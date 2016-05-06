@@ -1,0 +1,43 @@
+/* some style */
+
+.category-navigation {
+  font-size: medium;
+}
+
+.main-content {
+  margin-top: 150px;
+}
+
+.tree-view {
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.tree-view-item {
+  list-style: none;
+}
+
+.elements-view {
+  height: 400px;
+}
+
+.tree-view-icon {
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  background-color: red;
+}
+
+.inner-tree-view {
+  margin-left: 10px;
+}
+
+.category-item {
+  margin-left: 20px;
+  margin-bottom: 20px;
+  display: inline;
+}
+
+.category-block {
+  margin-top: 20px;
+}
