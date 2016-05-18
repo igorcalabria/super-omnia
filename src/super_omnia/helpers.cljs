@@ -1,0 +1,83 @@
+(ns super-omnia.helpers
+  (:require [clojure.set  :refer [rename-keys]]))
+
+(defn toggl-set [set value]
+  (if (get set value) (disj set value) (conj set value))
+  )
+
+(defn child-categories [categories root]
+  (filter #(= root (:root %)) (vals categories))
+  )
+
+(defn category-items [category-id kind categories]
+  (get-in categories [category-id kind]))
+
+(defn items-from-ids [items ids]
+  (map #(get items %) ids))
+
+(defn inline-sub-categories [all-categories target-categories]
+  (map (fn [category]
+         (let [id (:id category)]
+           (assoc category :sub-categories (child-categories all-categories id))))
+       target-categories))
+
+(defn breadcrumb-list [categories root]
+  (loop [root-id root
+         result '()]
+    (if (= root-id 0)
+      result
+      (let [category (get categories root-id)
+            name (:name category)
+            id (:id category)]
+        (recur (:root category) (conj result {:name name :id id}))))
+    ))
+
+(defn set-is-open [open-categories {id :id :as category}]
+  (assoc category :open? (contains? open-categories id))
+  )
+
+(defn set-has-children [categories {id :id :as category}]
+  (assoc category :has-children? (not-empty (child-categories categories id)))
+  )
+
+(defn set-selected [tree-root {id :id :as category}]
+  (assoc category :selected? (= tree-root id))
+  )
+
+(defn parse-remote-item [project kind]
+  (into
+   {} (map (fn [kind] [(:id kind) kind]) (kind project))))
+
+(defn hashfy-remote-list [items]
+  (into
+   {} (map (fn [item] [(:id item) item]) items)))
+
+(defn idfy-items [items]
+  (map (fn [item] (:id item)) items))
+
+(defn idfy-category-elements [categories]
+  (map (fn [category]
+         (let [elements (:elements category)]
+           (assoc category :elements (idfy-items elements))
+           )) categories))
+
+(defn translate-remote-attributes [items]
+  (let [translation {:catId :root :relActionsId :actions :relQualitiesId :qualities}]
+    (map (fn [item] (rename-keys item translation)) items)
+    ))
+
+(defn parse-remote-categories [project]
+  (let [categories (:categories project)]
+    (-> categories
+        translate-remote-attributes
+        idfy-category-elements
+        hashfy-remote-list
+        )))
+
+(defn build-element-list [acc category]
+  (merge acc (hashfy-remote-list (:elements category)))
+  )
+
+(defn parse-remote-elements [project]
+  (reduce build-element-list {} (:categories project))
+  )

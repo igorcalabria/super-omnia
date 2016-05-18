@@ -1,43 +1,45 @@
 /* some style */
 
-.category-navigation {
-  font-size: medium;
-}
-
 .main-content {
   margin-top: 150px;
 }
 
 .tree-view {
-  height: 400px;
   overflow-y: scroll;
-}
-
-.tree-view-item {
-  list-style: none;
+  height: 500px;
 }
 
 .elements-view {
-  height: 400px;
+  height: 500px;
+  overflow-y: scroll;
 }
 
-.tree-view-icon {
-  height: 30px;
-  width: 30px;
-  display: inline-block;
-  background-color: red;
+.item-icon {
+  height: 100px;
+  width: 100px;
 }
 
-.inner-tree-view {
-  margin-left: 10px;
+.inline {
+  display: inline-block !important;
+}
+
+.category-breadcrumb {
+  font-size: 100% !important;
+}
+
+.item-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
 }
 
 .category-item {
-  margin-left: 20px;
-  margin-bottom: 20px;
-  display: inline;
+  margin-left: 0.2rem;
+  text-transform: capitalize;
 }
 
-.category-block {
-  margin-top: 20px;
+.selected-category-item {
+  font-weight: bold;
+  font-size: 120%;
 }

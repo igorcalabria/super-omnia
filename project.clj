@@ -5,13 +5,15 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :min-lein-version "2.6.1"
-  
+
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.8.51"]
                  [org.clojure/core.async "0.2.374"
                   :exclusions [org.clojure/tools.reader]]
-                 [reagent "0.5.1"]]
-  
+                 [reagent "0.5.1"]
+                 [re-frame "0.7.0"]
+                 [cljs-ajax "0.5.5"]]
+
   :plugins [[lein-figwheel "0.5.3"]
             [lein-cljsbuild "1.1.3" :exclusions [[org.clojure/clojure]]]]
 
@@ -54,7 +56,7 @@
              ;; if you want to embed a ring handler into the figwheel http-kit
              ;; server, this is for simple ring servers, if this
              ;; doesn't work for you just run your own server :) (see lien-ring)
-             
+
              ;; :ring-handler hello_world.server/handler
 
              ;; To be able to open files in your editor from the heads up display
@@ -65,7 +67,7 @@
              ;; emacsclient -n +$2 $1
              ;;
              ;; :open-file-command "myfile-opener"
-             
+
              ;; if you are using emacsclient you can just use
              ;; :open-file-command "emacsclient"
 
@@ -76,13 +78,22 @@
              ;; :server-logfile "tmp/logs/figwheel-logfile.log"
              }
 
- 
+
   ;; setting up nREPL for Figwheel and ClojureScript dev
   ;; Please see:
   ;; https://github.com/bhauman/lein-figwheel/wiki/Using-the-Figwheel-REPL-within-NRepl
-  
+
   :profiles {:dev {:dependencies [[figwheel-sidecar "0.5.3"]
-                                  [com.cemerick/piggieback "0.2.1"]]
+                                  [com.cemerick/piggieback "0.2.1"]
+                                  [ring/ring-core "1.4.0"]
+                                  [ring/ring-devel "1.4.0"]
+                                  [compojure "1.5.0"]
+                                  [ring/ring-jetty-adapter "1.4.0"]
+                                  [ring/ring-json "0.4.0"]
+                                  [cheshire "5.6.1"]
+                                  [ring-cors "0.1.7"]]
+
+                   :source-paths ["dev"]
                    ;; for CIDER
                    ;; :plugins [[cider/cider-nrepl "0.12.0"]]
                    :repl-options {; for nREPL dev you really need to limit output
