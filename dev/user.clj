@@ -1,6 +1,6 @@
 (ns user
   (:require [ring.adapter.jetty :as jetty]
-            [compojure.core :refer [GET defroutes]]
+            [compojure.core :refer [POST GET defroutes]]
             [ring.middleware.reload :refer [wrap-reload]]
             [ring.middleware.json :refer [wrap-json-response]]
             [ring.util.response :refer [response]]
@@ -11,11 +11,19 @@
 (def project-json-file
   (slurp "resources/api/project.json"))
 
+(def category-json-file
+  (slurp "resources/api/category.json"))
+
 (defn project-view []
   (response (parse-string project-json-file)))
 
+(defn category-view []
+  (assoc (response (parse-string category-json-file)) :status 201 ))
+
 (defroutes app
-  (GET "/adesign/api/project/:id" [] (project-view)))
+  (GET "/adesign/api/project/:id" [] (project-view))
+  (POST "/adesign/api/project/:id/category" [] (category-view))
+  )
 
 (def reloadable-app
   (-> app
