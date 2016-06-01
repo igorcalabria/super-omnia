@@ -36,6 +36,12 @@
    ))
 
 (register-sub
+ :action-modal
+ (fn [db _]
+   (reaction (:action-modal-open? @db))
+   ))
+
+(register-sub
  :selected-filter
  (fn [db _]
    (reaction (:selected @db))

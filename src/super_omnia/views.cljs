@@ -110,8 +110,35 @@
     )
   )
 
+(defn modal-content []
+  (fn []
+    [:div "Content"]
+    ))
+
+(defn action-modal []
+  (let [open? (subscribe [:action-modal])]
+    (fn []
+      (let [display (if @open? "block" "none")]
+        [:div
+         [:div {:class "reveal-overlay"
+                :id "overlay"
+                :style {:display display}
+                :on-click #(dispatch [:toggl-action-modal])}
+          [:div {:class "reveal"
+                 :id "content"
+                 :on-click #(.stopPropagation %)
+                 :style {:display display }}
+           [:button {:class "close-button"
+                     :on-click #(dispatch [:toggl-action-modal])
+                     :type "button"}
+            [:span {:aria-hidden true} "x"]]
+           [modal-content]]
+          ]]
+        ))))
+
 (defn app []
   [:div {:class "main-content"}
+   [action-modal]
    [:div {:class "row"}
     [:div {:class "small-8 columns small-centered"}
      [:div {:class "callout"}
@@ -132,5 +159,4 @@
         ]
        ]
       [items-list]]
-     ]]]
-  )
+     ]]])

@@ -9,7 +9,8 @@
 (def initial-state {:open-categories #{}
                     :tree-root 0
                     :selected :elements
-                    :action-menu-open? false })
+                    :action-menu-open? false
+                    :action-modal-open? false })
 
 (register-handler
  :initialise-db
@@ -39,11 +40,18 @@
 
 (register-handler
  :toggl-action-menu
- (fn [app-state [_ kind]]
+ (fn [app-state _]
    (let [open? (:action-menu-open? app-state)]
      (assoc app-state :action-menu-open? (not open?))
      )
    ))
+
+(register-handler
+ :toggl-action-modal
+ (fn [app-state _]
+   (let [open? (:action-modal-open? app-state)]
+     (assoc app-state :action-modal-open? (not open?))
+     )))
 
 (register-handler
  :process-root-request
