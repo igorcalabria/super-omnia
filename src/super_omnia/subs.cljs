@@ -30,6 +30,12 @@
      )))
 
 (register-sub
+ :action-menu
+ (fn [db _]
+   (reaction (:action-menu-open? @db))
+   ))
+
+(register-sub
  :selected-filter
  (fn [db _]
    (reaction (:selected @db))

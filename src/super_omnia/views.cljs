@@ -89,13 +89,33 @@
          )]
       )))
 
+(defn actions-menu []
+  (let [open? (subscribe [:action-menu])]
+    (fn []
+      [:div
+       [:button {:class "float-right button"
+                 :on-click #(dispatch [:toggl-action-menu]) }
+        [:i {:class "fa fa-bars"}]]
+       [:div {:class (str (if @open? "is-open ")  "dropdown-pane")
+              :style {:top "60px" :right "15px"}}
+        [:ul {:class "vertical menu"}
+         [:li [:a "Nova Categoria"]]
+         [:li [:a "Nova Qualidade"]]
+         [:li [:a "Novo Elemento"]]
+         [:li [:a "Nova Ação"]]
+         ]
+        ]
+       ]
+      )
+    )
+  )
+
 (defn app []
   [:div {:class "main-content"}
    [:div {:class "row"}
     [:div {:class "small-8 columns small-centered"}
      [:div {:class "callout"}
-     [category-breadcrumb]
-      ]
+      [category-breadcrumb]]
      ]]
    [:div {:class "row"}
     [:div {:class "small-4 columns"}
@@ -108,7 +128,8 @@
         [item-filter-menu]
         ]
        [:div {:class "columns small-6"}
-        [:button {:class "float-right button"} [:i {:class "fa fa-bars"}]]]
+        [actions-menu]
+        ]
        ]
       [items-list]]
      ]]]

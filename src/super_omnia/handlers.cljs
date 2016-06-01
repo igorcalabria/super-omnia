@@ -8,7 +8,8 @@
 (def api-root-url "http://localhost:8080/adesign/api/project/1")
 (def initial-state {:open-categories #{}
                     :tree-root 0
-                    :selected :elements })
+                    :selected :elements
+                    :action-menu-open? false })
 
 (register-handler
  :initialise-db
@@ -34,6 +35,14 @@
  :select-item-filter
  (fn [app-state [_ kind]]
    (assoc app-state :selected kind)
+   ))
+
+(register-handler
+ :toggl-action-menu
+ (fn [app-state [_ kind]]
+   (let [open? (:action-menu-open? app-state)]
+     (assoc app-state :action-menu-open? (not open?))
+     )
    ))
 
 (register-handler
