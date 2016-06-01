@@ -55,22 +55,26 @@
 (defn idfy-items [items]
   (map (fn [item] (:id item)) items))
 
-(defn idfy-category-elements [categories]
-  (map (fn [category]
-         (let [elements (:elements category)]
-           (assoc category :elements (idfy-items elements))
-           )) categories))
-
-(defn translate-remote-attributes [items]
-  (let [translation {:catId :root :relActionsId :actions :relQualitiesId :qualities}]
-    (map (fn [item] (rename-keys item translation)) items)
+(defn idfy-category-elements [category]
+  (let [elements (:elements category)]
+    (assoc category :elements (idfy-items elements))
     ))
+
+(defn translate-remote-attributes [item]
+  (let [translation {:catId :root :relActionsId :actions :relQualitiesId :qualities}]
+    (rename-keys item translation)
+    ))
+
+(defn parse-remote-category [category]
+  (-> category
+      translate-remote-attributes
+      idfy-category-elements))
 
 (defn parse-remote-categories [project]
   (let [categories (:categories project)]
-    (-> categories
-        translate-remote-attributes
-        idfy-category-elements
+    (->> categories
+        (map translate-remote-attributes)
+        (map idfy-category-elements)
         hashfy-remote-list
         )))
 

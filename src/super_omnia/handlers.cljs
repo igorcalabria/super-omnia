@@ -3,7 +3,7 @@
                                    dispatch]]
             [reagent.core :refer [atom]]
             [super-omnia.helpers :as helpers]
-            [ajax.core :refer [GET]]))
+            [ajax.core :refer [GET POST]]))
 
 (def api-root-url "http://localhost:8080/adesign/api/project/1")
 (def initial-state {:open-categories #{}
@@ -19,6 +19,16 @@
                       :response-format :json
                       :keywords? true})
    initial-state))
+
+(register-handler
+ :create-category
+ (fn [app-state [_ params]]
+   (POST (str api-root-url "/category") {:params params
+                                         :handler #(dispatch [:process-new-category %1])
+                                         :response-format :json
+                                         :keywords? true})
+   app-state
+   ))
 
 (register-handler
  :change-tree-root
@@ -51,6 +61,13 @@
  (fn [app-state _]
    (let [open? (:action-modal-open? app-state)]
      (assoc app-state :action-modal-open? (not open?))
+     )))
+
+(register-handler
+ :process-new-category
+ (fn [app-state [_ response]]
+   (let [category (helpers/parse-remote-category response)]
+     (assoc-in app-state [:categories (:id category)] category)
      )))
 
 (register-handler
