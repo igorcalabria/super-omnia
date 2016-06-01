@@ -14,7 +14,6 @@
                (not has-children?) ""
                open? "fa-minus-square-o"
                :else "fa-plus-square-o")]
-    (list
      [:a
       [:i {:class (str "fa " icon " fa-2x")
            :aria-hidden "true"
@@ -24,7 +23,6 @@
               :on-click #(dispatch [:change-tree-root id])}
        name
        ]]
-     )
     ))
 
 (defn breadcrumb-item [name id]
