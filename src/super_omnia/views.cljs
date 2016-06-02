@@ -113,9 +113,14 @@
   )
 
 (defn icon-list [icons]
-  [:ul
+  [:div  {:class "row small-up-2 medium-up-4"}
    (for [{:keys [:id :icon :name]} icons]
-     ^{:key id} [:li name]
+     [:div {:class "columns"}
+      [:div {:class "item-view text-center"}
+       [:span {:class "item-label" }  name]
+       [:img {:class "item-icon thumbnail" :src icon}]
+       ]
+      ]
      )
    ]
   )
