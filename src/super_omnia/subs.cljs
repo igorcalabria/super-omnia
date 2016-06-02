@@ -41,6 +41,14 @@
    ))
 
 (register-sub
+ :selected-icon
+ (fn [db _]
+   (let [icons (reaction (:resource-icons @db))
+         selected (reaction (:selected-icon @db))]
+     (reaction (get @icons @selected)))
+   ))
+
+(register-sub
  :action-menu
  (fn [db _]
    (reaction (:action-menu-open? @db))

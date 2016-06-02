@@ -115,8 +115,8 @@
 (defn icon-list [icons]
   [:div  {:class "row small-up-2 medium-up-4"}
    (for [{:keys [:id :icon :name]} icons]
-     [:div {:class "columns"}
-      [:div {:class "item-view text-center"}
+     ^{:key id} [:div {:class "columns"}
+      [:div {:class "item-view text-center" :on-click #(dispatch [:select-icon id])}
        [:label {:class "item-label"} name]
        [:img {:class "item-icon thumbnail" :src icon}]
        ]
@@ -125,46 +125,47 @@
    ]
   )
 
-(defn icon-chooser [resource-icons]
-  [:div
-   [:div {:class "row"}
-    [:div {:class "small-6 columns"}
-     [:div {:class "input-group"}
-      [:span {:class "input-group-label"} [:i {:class "fa fa-search"}]]
-      [:input {:class "input-group-field"
-               :type "text"
-               :placeholder "Escolha um Ícone"
-               :on-change #(dispatch [:icon-search (-> % .-target .-value)])}]
-      ]
-     ]
-    ]
-   [:div {:class "row"}
-    [:div {:class "columns small-12"}
-     [:div {:class "callout icon-chooser"}
-      (icon-list @resource-icons)
-      ]
-     ]
-    ]
-   ]
-  )
-
-(defn modal-content []
+(defn icon-chooser []
   (fn []
     (let [resource-icons (subscribe [:resource-icons])]
       [:div
+       [:div {:class "row"}
+        [:div {:class "small-6 columns"}
+         [:div {:class "input-group"}
+          [:span {:class "input-group-label"} [:i {:class "fa fa-search"}]]
+          [:input {:class "input-group-field"
+                   :type "text"
+                   :placeholder "Escolha um Ícone"
+                   :on-change #(dispatch [:icon-search (-> % .-target .-value)])}]
+          ]
+         ]
+        ]
+       [:div {:class "row"}
+        [:div {:class "columns small-12"}
+         [:div {:class "callout icon-chooser"}
+          (icon-list (doall @resource-icons))
+          ]
+         ]
+        ]
+       ])))
+
+(defn modal-content []
+  (fn []
+    (let [selected-icon (subscribe [:selected-icon])]
+      [:div
        [:h5 {:class "text-center"} "Nova Categoria"]
        [:form
-        [:div {:class "row"} (icon-chooser resource-icons) ]
+        [:div {:class "row"} [icon-chooser]]
         [:div {:class "row"}
          [:div {:class "columns small-7"}
           [:label "Ícone Escolhido"
-           [:input {:type "text" :disabled true :value ""}]]
+           [:input {:type "text" :disabled true :value (:name @selected-icon)}]]
           ]
          ]
         [:div {:class "row"}
          [:div {:class "columns small-7"}
           [:label "Nome"
-           [:input {:type "text" :value ""}]
+           [:input {:type "text"}]
            ]
           [:p {:class "help-text"}
            "Você pode escolher outro nome para a categoria"

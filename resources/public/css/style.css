@@ -34,6 +34,10 @@
   display: block;
 }
 
+.item-view {
+  cursor: pointer;
+}
+
 .category-item {
   margin-left: 0.2rem;
   text-transform: capitalize;

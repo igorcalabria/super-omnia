@@ -44,6 +44,12 @@
    ))
 
 (register-handler
+ :select-icon
+ (fn [app-state [_ icon]]
+   (assoc app-state :selected-icon icon)
+   ))
+
+(register-handler
  :change-tree-root
  (fn [app-state [_ root]]
    (assoc-in app-state [:tree-root] root)))
