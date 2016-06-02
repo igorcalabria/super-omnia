@@ -47,7 +47,8 @@
     (fn []
       [:div
        [:div {:class "row small-up-2 medium-up-3 large-up-6"}
-        (for [{name :name icon :icon} @items]
+        (for [{:keys [:name :icon :id]} @items]
+          ^{:key id}
           [:div {:class "columns"}
            [:div {:class "item-view text-center"}
             [:label {:class "item-label" } name]
@@ -81,9 +82,7 @@
       [:ul {:class (str "vertical menu " (if nested? "nested"))}
        (for [{:keys [id open?] :as category} @categories]
          ^{:key id}
-         [:li (list
-               (category-item category)
-               (if open? [category-list id true]))]
+         [:li (category-item category) (if open? [category-list id true])]
          )]
       )))
 
@@ -115,7 +114,8 @@
 (defn icon-list [icons]
   [:div  {:class "row small-up-2 medium-up-4"}
    (for [{:keys [:id :icon :name]} icons]
-     ^{:key id} [:div {:class "columns"}
+     ^{:key id}
+     [:div {:class "columns"}
       [:div {:class "item-view text-center" :on-click #(dispatch [:select-icon id])}
        [:label {:class "item-label"} name]
        [:img {:class "item-icon thumbnail" :src icon}]
