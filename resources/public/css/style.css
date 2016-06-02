@@ -1,7 +1,7 @@
 /* some style */
 
 .main-content {
-  margin-top: 150px;
+  margin-top: 50px;
 }
 
 .tree-view {
@@ -24,7 +24,8 @@
 }
 
 .category-breadcrumb {
-  font-size: 100% !important;
+  font-size: 90% !important;
+  text-transform: capitalize !important;
 }
 
 .item-label {
@@ -39,16 +40,19 @@
 }
 
 .category-item {
-  margin-left: 0.2rem;
+  margin-right: 0.4rem;
   text-transform: capitalize;
 }
 
 .selected-category-item {
   font-weight: bold;
-  font-size: 120%;
 }
 
 .icon-chooser {
   height: 300px;
   overflow-y: scroll;
+}
+
+.category-expander:before {
+  font-size: 80%;
 }

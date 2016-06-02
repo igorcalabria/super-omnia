@@ -12,17 +12,19 @@
 (defn category-item [{:keys [id name open? has-children? selected?]}]
   (let [icon (cond
                (not has-children?) ""
-               open? "fa-minus-square-o"
-               :else "fa-plus-square-o")]
+               open? "fa-minus"
+               :else "fa-plus")]
      [:a
-      [:i {:class (str "fa " icon " fa-2x")
-           :aria-hidden "true"
-           :on-click #(dispatch [:toggl-category id])}]
+
       [:span {:class (str "category-item "
                           (if selected? "selected-category-item"))
               :on-click #(dispatch [:change-tree-root id])}
        name
-       ]]
+       ]
+      [:i {:class (str "fa " icon " category-expander")
+           :aria-hidden "true"
+           :on-click #(dispatch [:toggl-category id])}]
+      ]
     ))
 
 (defn breadcrumb-item [name id]
