@@ -120,6 +120,24 @@
    ]
   )
 
+(defn icon-chooser [resource-icons]
+  [:div
+   [:div {:class "row"}
+    [:div {:class "small-6 columns float-right"}
+     [:div {:class "input-group"}
+      [:input {:class "input-group-field"
+               :type "text"
+               :on-change #(dispatch [:icon-search (-> % .-target .-value)])}]
+      [:span {:class "input-group-label"} [:i {:class "fa fa-search"}]]
+      ]
+     ]
+    ]
+   [:div {:class "callout icon-chooser"}
+    (icon-list @resource-icons)
+    ]
+   ]
+  )
+
 (defn modal-content []
   (fn []
     (let [resource-icons (subscribe [:resource-icons])]
@@ -132,21 +150,7 @@
            [:input {:type "text"}]]
           ]
          ]
-        [:div {:class "row"}
-         [:div {:class "row"}
-          [:div {:class "small-6 columns float-right"}
-           [:div {:class "input-group"}
-            [:input {:class "input-group-field"
-                     :type "text"
-                     :on-change #(dispatch [:icon-search (-> % .-target .-value)])}]
-            [:span {:class "input-group-label"} [:i {:class "fa fa-search"}]]
-            ]
-           ]
-          ]
-         [:div {:class "callout icon-chooser"}
-          (icon-list @resource-icons)
-          ]
-         ]
+        [:div {:class "row"} (icon-chooser resource-icons) ]
         [:div {:class "row"}
          [:div {:class "columns small-2 float-right"}
           [:button {:class "button success"} "Salvar"]
