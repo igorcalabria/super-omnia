@@ -100,10 +100,10 @@
        [:div {:class (str (if @open? "is-open ")  "dropdown-pane")
               :style {:top "60px" :right "15px"}}
         [:ul {:class "vertical menu"}
-         [:li (action-menu-item "Nova Categoria")]
-         [:li (action-menu-item "Novo Elemento")]
-         [:li (action-menu-item "Nova Qualidade")]
-         [:li (action-menu-item "Nova Ação")]
+         [:li (action-menu-item "Adicionar Categoria")]
+         [:li (action-menu-item "Adicionar Elemento")]
+         [:li (action-menu-item "Adicionar Qualidade")]
+         [:li (action-menu-item "Adicionar Ação")]
          ]
         ]
        ]
