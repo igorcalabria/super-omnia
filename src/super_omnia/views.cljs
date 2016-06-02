@@ -128,17 +128,22 @@
 (defn icon-chooser [resource-icons]
   [:div
    [:div {:class "row"}
-    [:div {:class "small-6 columns float-right"}
+    [:div {:class "small-6 columns"}
      [:div {:class "input-group"}
+      [:span {:class "input-group-label"} [:i {:class "fa fa-search"}]]
       [:input {:class "input-group-field"
                :type "text"
+               :placeholder "Escolha um Ícone"
                :on-change #(dispatch [:icon-search (-> % .-target .-value)])}]
-      [:span {:class "input-group-label"} [:i {:class "fa fa-search"}]]
       ]
      ]
     ]
-   [:div {:class "callout icon-chooser"}
-    (icon-list @resource-icons)
+   [:div {:class "row"}
+    [:div {:class "columns small-12"}
+     [:div {:class "callout icon-chooser"}
+      (icon-list @resource-icons)
+      ]
+     ]
     ]
    ]
   )
@@ -149,13 +154,23 @@
       [:div
        [:h5 {:class "text-center"} "Nova Categoria"]
        [:form
+        [:div {:class "row"} (icon-chooser resource-icons) ]
         [:div {:class "row"}
-         [:div {:class "columns small-5"}
-          [:label "Nome"
-           [:input {:type "text"}]]
+         [:div {:class "columns small-7"}
+          [:label "Ícone Escolhido"
+           [:input {:type "text" :disabled true :value ""}]]
           ]
          ]
-        [:div {:class "row"} (icon-chooser resource-icons) ]
+        [:div {:class "row"}
+         [:div {:class "columns small-7"}
+          [:label "Nome"
+           [:input {:type "text" :value ""}]
+           ]
+          [:p {:class "help-text"}
+           "Você pode escolher outro nome para a categoria"
+           ]
+          ]
+         ]
         [:div {:class "row"}
          [:div {:class "columns small-2 float-right"}
           [:button {:class "button success"} "Salvar"]
