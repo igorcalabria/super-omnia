@@ -14,14 +14,21 @@
 (def category-json-file
   (slurp "resources/api/category.json"))
 
+(def resources-json-file
+  (slurp "resources/api/resources.json"))
+
 (defn project-view []
   (response (parse-string project-json-file)))
 
 (defn category-view []
   (assoc (response (parse-string category-json-file)) :status 201 ))
 
+(defn resources-view []
+  (response (parse-string resources-json-file)))
+
 (defroutes app
   (GET "/adesign/api/project/:id" [] (project-view))
+  (GET "/adesign/api/resource/find/:name" [] (resources-view))
   (POST "/adesign/api/project/:id/category" [] (category-view))
   )
 
