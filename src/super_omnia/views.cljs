@@ -136,7 +136,9 @@
          [:div {:class "row"}
           [:div {:class "small-6 columns float-right"}
            [:div {:class "input-group"}
-            [:input {:class "input-group-field" :type "text"}]
+            [:input {:class "input-group-field"
+                     :type "text"
+                     :on-change #(dispatch [:icon-search (-> % .-target .-value)])}]
             [:span {:class "input-group-label"} [:i {:class "fa fa-search"}]]
             ]
            ]

@@ -1,7 +1,8 @@
 (ns super-omnia.subs
   (:require-macros [reagent.ratom :refer [reaction]])
   (:require [re-frame.core :refer [register-sub]]
-            [super-omnia.helpers :as helpers]))
+            [super-omnia.helpers :as helpers]
+            [clojure.string :as str]))
 
 (register-sub
  :category-query
@@ -32,7 +33,11 @@
 (register-sub
  :resource-icons
  (fn [db _]
-   (reaction (vals (:resource-icons @db)))
+   (let [icons (reaction (vals (:resource-icons @db)))
+         search (reaction (:icon-search-value @db))]
+
+     (reaction (filter #(str/includes? (:name %) @search) @icons))
+     )
    ))
 
 (register-sub

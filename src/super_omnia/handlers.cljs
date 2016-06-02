@@ -12,7 +12,8 @@
                     :tree-root 0
                     :selected :elements
                     :action-menu-open? false
-                    :action-modal-open? false })
+                    :action-modal-open? false
+                    :icon-search-value ""})
 
 (register-handler
  :initialise-db
@@ -34,6 +35,12 @@
                                          :response-format :json
                                          :keywords? true})
    app-state
+   ))
+
+(register-handler
+ :icon-search
+ (fn [app-state [_ search-value]]
+   (assoc app-state :icon-search-value search-value)
    ))
 
 (register-handler
