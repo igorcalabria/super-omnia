@@ -113,10 +113,10 @@
 
 (defn icon-list [icons]
   [:div  {:class "row small-up-2 medium-up-4"}
-   (for [{:keys [:id :icon :name]} icons]
+   (for [{:keys [:id :icon :name] :as elem} icons]
      ^{:key id}
      [:div {:class "columns"}
-      [:div {:class "item-view text-center" :on-click #(dispatch [:select-icon id])}
+      [:div {:class "item-view text-center" :on-click #(dispatch [:select-icon elem])}
        [:label {:class "item-label"} name]
        [:img {:class "item-icon thumbnail" :src icon}]
        ]
@@ -161,12 +161,11 @@
 
 (defn item-name-input []
   (fn []
-    (let [name (subscribe [:form/item-name])
-          selected-icon (subscribe [:selected-icon])]
+    (let [name (subscribe [:form/item-name])]
       [:div {:class "columns small-7"}
        [:label "Nome"
         [:input {:type "text"
-                 :value (if (nil? @name) (:name @selected-icon) @name)
+                 :value @name
                  :on-change #(dispatch [:form/item-name (-> % .-target .-value)])}]
         ]
        [:p {:class "help-text"}

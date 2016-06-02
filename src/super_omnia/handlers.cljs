@@ -46,12 +46,11 @@
 
 (register-handler
  :select-icon
- (fn [app-state [_ icon]]
+ (fn [app-state [_ {id :id item-name :name}]]
    (-> app-state
-       (assoc :selected-icon icon)
-       (dissoc :form/item-name)
-       )
-   ))
+       (assoc :selected-icon id)
+       (assoc :form/item-name item-name)
+       )))
 
 (register-handler
  :form/item-name
@@ -99,7 +98,7 @@
      (-> app-state
          (assoc-in [:categories (:id category)] category)
          (assoc :action-modal-open? false)
-         (dissoc :select-icon)
+         (dissoc :selected-icon)
          (dissoc :form/item-name)
          ))))
 
