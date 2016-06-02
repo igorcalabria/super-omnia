@@ -220,23 +220,22 @@
   [:div {:class "main-content"}
    [action-modal]
    [:div {:class "row"}
-    [:div {:class "small-8 columns small-centered"}
-     [:div {:class "callout"}
-      [category-breadcrumb]]
-     ]]
-   [:div {:class "row"}
     [:div {:class "small-4 columns"}
      [:div {:class "tree-view callout"}
       [category-list 0 false]]]
     [:div {:class "small-8 columns"}
-     [:div {:class "elements-view callout"}
-      [:div {:class "items-toolbar row"}
-       [:div {:class "columns small-6"}
-        [item-filter-menu]
+     [:div {:class "row"}
+      [:div {:class "callout"}
+       [category-breadcrumb]]
+      ]
+     [:div {:class "row"}
+      [:div {:class "elements-view callout"}
+       [:div {:class "items-toolbar row"}
+        [:div {:class "columns small-6"}
+         [item-filter-menu]]
+        [:div {:class "columns small-6"}
+         [actions-menu]
+         ]
         ]
-       [:div {:class "columns small-6"}
-        [actions-menu]
-        ]
-       ]
-      [items-list]]
-     ]]])
+       [items-list]]
+      ]]]])
