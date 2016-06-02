@@ -112,33 +112,45 @@
     )
   )
 
+(defn icon-list [icons]
+  [:ul
+   (for [{:keys [:id :icon :name]} icons]
+     ^{:key id} [:li name]
+     )
+   ]
+  )
+
 (defn modal-content []
   (fn []
-    [:div
-     [:h5 {:class "text-center"} "Nova Categoria"]
-     [:form
-      [:div {:class "row"}
-       [:div {:class "columns small-5"}
-        [:label "Nome"
-         [:input {:type "text"}]]
-        ]
-       ]
-      [:div {:class "row"}
-       [:div {:class "row"}
-        [:div {:class "small-6 columns float-right"}
-         [:div {:class "input-group"}
-          [:input {:class "input-group-field" :type "text"}]
-          [:span {:class "input-group-label"} [:i {:class "fa fa-search"}]]
+    (let [resource-icons (subscribe [:resource-icons])]
+      [:div
+       [:h5 {:class "text-center"} "Nova Categoria"]
+       [:form
+        [:div {:class "row"}
+         [:div {:class "columns small-5"}
+          [:label "Nome"
+           [:input {:type "text"}]]
           ]
          ]
-        ]
-       [:div {:class "callout"} "Resource list here"]
-       ]
-      [:div {:class "row"}
-       [:div {:class "columns small-2 float-right"}
-        [:button {:class "button success"} "Salvar"]
+        [:div {:class "row"}
+         [:div {:class "row"}
+          [:div {:class "small-6 columns float-right"}
+           [:div {:class "input-group"}
+            [:input {:class "input-group-field" :type "text"}]
+            [:span {:class "input-group-label"} [:i {:class "fa fa-search"}]]
+            ]
+           ]
+          ]
+         [:div {:class "callout icon-chooser"}
+          (icon-list @resource-icons)
+          ]
+         ]
+        [:div {:class "row"}
+         [:div {:class "columns small-2 float-right"}
+          [:button {:class "button success"} "Salvar"]
+          ]]
         ]]
-      ]]
+      )
     ))
 
 (defn action-modal []

@@ -30,6 +30,12 @@
      )))
 
 (register-sub
+ :resource-icons
+ (fn [db _]
+   (reaction (vals (:resource-icons @db)))
+   ))
+
+(register-sub
  :action-menu
  (fn [db _]
    (reaction (:action-menu-open? @db))

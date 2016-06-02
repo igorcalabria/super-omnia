@@ -43,3 +43,8 @@
   font-weight: bold;
   font-size: 120%;
 }
+
+.icon-chooser {
+  height: 200px;
+  overflow-y: scroll;
+}
