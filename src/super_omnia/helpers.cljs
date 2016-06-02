@@ -65,6 +65,10 @@
     (rename-keys item translation)
     ))
 
+(defn parse-remote-icons [{content :content :as response}]
+  (hashfy-remote-list content)
+  )
+
 (defn parse-remote-category [category]
   (-> category
       translate-remote-attributes

@@ -6,6 +6,8 @@
             [ajax.core :refer [GET POST]]))
 
 (def api-root-url "http://localhost:8080/adesign/api/project/1")
+(def resources-root-url "http://localhost:8080/adesign/api/resource/find/_")
+
 (def initial-state {:open-categories #{}
                     :tree-root 0
                     :selected :elements
@@ -15,6 +17,10 @@
 (register-handler
  :initialise-db
  (fn [_ _]
+   (GET resources-root-url {:handler #(dispatch [:process-resource-icons %])
+                            :response-format :json
+                            :keywords? true })
+
    (GET api-root-url {:handler #(dispatch [:process-root-request %1])
                       :response-format :json
                       :keywords? true})
@@ -69,6 +75,12 @@
    (let [category (helpers/parse-remote-category response)]
      (assoc-in app-state [:categories (:id category)] category)
      )))
+
+(register-handler
+ :process-resource-icons
+ (fn [app-state [_ response]]
+   (assoc app-state :resource-icons (helpers/parse-remote-icons response))
+   ))
 
 (register-handler
  :process-root-request
