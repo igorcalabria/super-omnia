@@ -50,7 +50,7 @@
         (for [{name :name icon :icon} @items]
           [:div {:class "columns"}
            [:div {:class "item-view text-center"}
-            [:span {:class "item-label" }  name]
+            [:label {:class "item-label" } name]
             [:img {:class "item-icon thumbnail" :src icon}]
             ]
            ]
@@ -117,7 +117,7 @@
    (for [{:keys [:id :icon :name]} icons]
      [:div {:class "columns"}
       [:div {:class "item-view text-center"}
-       [:span {:class "item-label" }  name]
+       [:label {:class "item-label"} name]
        [:img {:class "item-icon thumbnail" :src icon}]
        ]
       ]
