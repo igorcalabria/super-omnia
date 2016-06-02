@@ -177,20 +177,22 @@
 
 (defn modal-content []
   (fn []
-    [:div
-     [:h5 {:class "text-center"} "Nova Categoria"]
-     [:form
-      [:div {:class "row"} [icon-chooser]]
-      [:div {:class "row"}
-       [selected-icon-input]]
-      [:div {:class "row"}
-       [item-name-input]]
-      [:div {:class "row"}
-       [:div {:class "columns small-2 float-right"}
-        [:button {:class "button success"} "Salvar"]
+    (let [params (subscribe [:form-params])]
+      [:div
+       [:h5 {:class "text-center"} "Nova Categoria"]
+       [:form
+        [:div {:class "row"} [icon-chooser]]
+        [:div {:class "row"}
+         [selected-icon-input]]
+        [:div {:class "row"}
+         [item-name-input]]
+        [:div {:class "row"}
+         [:div {:class "columns small-2 float-right"}
+          [:button {:class "button success" :type "button"
+                    :on-click #(dispatch [:create-category @params])} "Salvar"]
+          ]]
         ]]
-      ]]
-    ))
+      )))
 
 (defn action-modal []
   (let [open? (subscribe [:action-modal])]

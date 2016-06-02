@@ -33,6 +33,7 @@
    (POST (str api-root-url "/category") {:params params
                                          :handler #(dispatch [:process-new-category %1])
                                          :response-format :json
+                                         :format :json
                                          :keywords? true})
    app-state
    ))
@@ -95,8 +96,12 @@
  :process-new-category
  (fn [app-state [_ response]]
    (let [category (helpers/parse-remote-category response)]
-     (assoc-in app-state [:categories (:id category)] category)
-     )))
+     (-> app-state
+         (assoc-in [:categories (:id category)] category)
+         (assoc :action-modal-open? false)
+         (dissoc :select-icon)
+         (dissoc :form/item-name)
+         ))))
 
 (register-handler
  :process-resource-icons
