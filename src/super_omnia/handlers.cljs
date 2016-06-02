@@ -46,7 +46,16 @@
 (register-handler
  :select-icon
  (fn [app-state [_ icon]]
-   (assoc app-state :selected-icon icon)
+   (-> app-state
+       (assoc :selected-icon icon)
+       (dissoc :form/item-name)
+       )
+   ))
+
+(register-handler
+ :form/item-name
+ (fn [app-state [_ name]]
+   (assoc app-state :form/item-name name)
    ))
 
 (register-handler

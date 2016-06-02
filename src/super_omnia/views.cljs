@@ -128,6 +128,7 @@
 (defn icon-chooser []
   (fn []
     (let [resource-icons (subscribe [:resource-icons])]
+      (println "heavy")
       [:div
        [:div {:class "row"}
         [:div {:class "small-6 columns"}
@@ -149,35 +150,46 @@
         ]
        ])))
 
-(defn modal-content []
+(defn selected-icon-input []
   (fn []
     (let [selected-icon (subscribe [:selected-icon])]
-      [:div
-       [:h5 {:class "text-center"} "Nova Categoria"]
-       [:form
-        [:div {:class "row"} [icon-chooser]]
-        [:div {:class "row"}
-         [:div {:class "columns small-7"}
-          [:label "Ícone Escolhido"
-           [:input {:type "text" :disabled true :value (:name @selected-icon)}]]
-          ]
-         ]
-        [:div {:class "row"}
-         [:div {:class "columns small-7"}
-          [:label "Nome"
-           [:input {:type "text"}]
-           ]
-          [:p {:class "help-text"}
-           "Você pode escolher outro nome para a categoria"
-           ]
-          ]
-         ]
-        [:div {:class "row"}
-         [:div {:class "columns small-2 float-right"}
-          [:button {:class "button success"} "Salvar"]
-          ]]
+      [:div {:class "columns small-7"}
+       [:label "Ícone Escolhido"
+        [:input {:type "text" :disabled true :value (:name @selected-icon)}]]
+       ]
+      )))
+
+(defn item-name-input []
+  (fn []
+    (let [name (subscribe [:form/item-name])
+          selected-icon (subscribe [:selected-icon])]
+      [:div {:class "columns small-7"}
+       [:label "Nome"
+        [:input {:type "text"
+                 :value (if (nil? @name) (:name @selected-icon) @name)
+                 :on-change #(dispatch [:form/item-name (-> % .-target .-value)])}]
+        ]
+       [:p {:class "help-text"}
+        "Você pode escolher outro nome para a categoria"
+        ]
+       ]
+      )))
+
+(defn modal-content []
+  (fn []
+    [:div
+     [:h5 {:class "text-center"} "Nova Categoria"]
+     [:form
+      [:div {:class "row"} [icon-chooser]]
+      [:div {:class "row"}
+       [selected-icon-input]]
+      [:div {:class "row"}
+       [item-name-input]]
+      [:div {:class "row"}
+       [:div {:class "columns small-2 float-right"}
+        [:button {:class "button success"} "Salvar"]
         ]]
-      )
+      ]]
     ))
 
 (defn action-modal []

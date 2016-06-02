@@ -33,10 +33,13 @@
 (register-sub
  :resource-icons
  (fn [db _]
-   (let [icons (reaction (vals (:resource-icons @db)))
+   (let [icons (reaction (:resource-icons @db))
          search (reaction (:icon-search-value @db))]
 
-     (reaction (filter #(str/includes? (:name %) @search) @icons))
+     (reaction (->> @icons
+                    (map last)
+                    (filter #(str/includes? (:name %) @search))
+                    ))
      )
    ))
 
@@ -46,6 +49,12 @@
    (let [icons (reaction (:resource-icons @db))
          selected (reaction (:selected-icon @db))]
      (reaction (get @icons @selected)))
+   ))
+
+(register-sub
+ :form/item-name
+ (fn [db _]
+   (reaction (:form/item-name @db))
    ))
 
 (register-sub
