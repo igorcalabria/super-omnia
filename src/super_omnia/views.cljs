@@ -87,6 +87,10 @@
          )]
       )))
 
+(defn action-menu-item [text]
+  [:a {:on-click #(dispatch [:toggl-action-modal])} text]
+  )
+
 (defn actions-menu []
   (let [open? (subscribe [:action-menu])]
     (fn []
@@ -97,10 +101,10 @@
        [:div {:class (str (if @open? "is-open ")  "dropdown-pane")
               :style {:top "60px" :right "15px"}}
         [:ul {:class "vertical menu"}
-         [:li [:a "Nova Categoria"]]
-         [:li [:a "Nova Qualidade"]]
-         [:li [:a "Novo Elemento"]]
-         [:li [:a "Nova Ação"]]
+         [:li (action-menu-item "Nova Categoria")]
+         [:li (action-menu-item "Novo Elemento")]
+         [:li (action-menu-item "Nova Qualidade")]
+         [:li (action-menu-item "Nova Ação")]
          ]
         ]
        ]
@@ -110,7 +114,31 @@
 
 (defn modal-content []
   (fn []
-    [:div "Content"]
+    [:div
+     [:h5 {:class "text-center"} "Nova Categoria"]
+     [:form
+      [:div {:class "row"}
+       [:div {:class "columns small-5"}
+        [:label "Nome"
+         [:input {:type "text"}]]
+        ]
+       ]
+      [:div {:class "row"}
+       [:div {:class "row"}
+        [:div {:class "small-6 columns float-right"}
+         [:div {:class "input-group"}
+          [:input {:class "input-group-field" :type "text"}]
+          [:span {:class "input-group-label"} [:i {:class "fa fa-search"}]]
+          ]
+         ]
+        ]
+       [:div {:class "callout"} "Resource list here"]
+       ]
+      [:div {:class "row"}
+       [:div {:class "columns small-2 float-right"}
+        [:button {:class "button success"} "Salvar"]
+        ]]
+      ]]
     ))
 
 (defn action-modal []
