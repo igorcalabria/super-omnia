@@ -33,13 +33,9 @@
 (register-sub
  :resource-icons
  (fn [db _]
-   (let [icons (reaction (:resource-icons @db))
+   (let [icons (reaction (vals (:resource-icons @db)))
          search (reaction (:icon-search-value @db))]
-
-     (reaction (->> @icons
-                    (map last)
-                    (filter #(str/includes? (:name %) @search))
-                    ))
+     (reaction (->> @icons (filter #(str/includes? (:name %) @search))))
      )
    ))
 

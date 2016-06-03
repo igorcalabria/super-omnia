@@ -128,9 +128,8 @@
   )
 
 (defn icon-chooser []
-  (fn []
-    (let [resource-icons (subscribe [:resource-icons])]
-      (println "heavy")
+  (let [resource-icons (subscribe [:resource-icons])]
+    (fn []
       [:div
        [:div {:class "row"}
         [:div {:class "small-6 columns"}
@@ -146,15 +145,16 @@
        [:div {:class "row"}
         [:div {:class "columns small-12"}
          [:div {:class "callout icon-chooser"}
-          (icon-list (doall @resource-icons))
+          [icon-list (doall @resource-icons)]
           ]
          ]
         ]
-       ])))
+       ]
+      )))
 
 (defn selected-icon-input []
-  (fn []
-    (let [selected-icon (subscribe [:selected-icon])]
+  (let [selected-icon (subscribe [:selected-icon])]
+    (fn []
       [:div {:class "columns small-7"}
        [:label "Ícone Escolhido"
         [:input {:type "text" :disabled true :value (:name @selected-icon)}]]
@@ -162,8 +162,8 @@
       )))
 
 (defn item-name-input []
-  (fn []
-    (let [name (subscribe [:form/item-name])]
+  (let [name (subscribe [:form/item-name])]
+    (fn []
       [:div {:class "columns small-7"}
        [:label "Nome"
         [:input {:type "text"
@@ -177,8 +177,8 @@
       )))
 
 (defn modal-content []
-  (fn []
-    (let [params (subscribe [:form-params])]
+  (let [params (subscribe [:form-params])]
+    (fn []
       [:div
        [:h5 {:class "text-center"} "Nova Categoria"]
        [:form
