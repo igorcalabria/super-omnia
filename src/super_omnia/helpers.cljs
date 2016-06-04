@@ -15,12 +15,6 @@
 (defn items-from-ids [items ids]
   (map #(get items %) ids))
 
-(defn inline-sub-categories [all-categories target-categories]
-  (map (fn [category]
-         (let [id (:id category)]
-           (assoc category :sub-categories (child-categories all-categories id))))
-       target-categories))
-
 (defn breadcrumb-list [categories root]
   (loop [root-id root
          result '()]
