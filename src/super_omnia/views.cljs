@@ -38,7 +38,6 @@
         categories (subscribe [:all-categories])]
     (fn []
       [:ul {:class "breadcrumbs"}
-       [breadcrumb-item "Inicio" 0]
        (for [{name :name id :id} (helpers/breadcrumb-list @categories @root)]
          [breadcrumb-item name id]
          )]
@@ -222,7 +221,7 @@
    [:div {:class "row"}
     [:div {:class "small-4 columns"}
      [:div {:class "tree-view callout"}
-      [category-list 0 false]]]
+      [category-list nil false]]]
     [:div {:class "small-8 columns"}
      [:div {:class "row"}
       [:div {:class "callout"}

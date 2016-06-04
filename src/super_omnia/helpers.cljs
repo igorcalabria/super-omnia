@@ -24,7 +24,7 @@
 (defn breadcrumb-list [categories root]
   (loop [root-id root
          result '()]
-    (if (= root-id 0)
+    (if (= root-id nil)
       result
       (let [category (get categories root-id)
             name (:name category)
@@ -74,11 +74,17 @@
       translate-remote-attributes
       idfy-category-elements))
 
+(defn add-root-category [actions qualities categories]
+  (conj categories {:id 0 :name "Inicio" :actions actions :qualities qualities :root nil}))
+
 (defn parse-remote-categories [project]
-  (let [categories (:categories project)]
+  (let [categories (:categories project)
+        actions (map :id (:actions project))
+        qualities (map :id (:qualities project))]
     (->> categories
         (map translate-remote-attributes)
         (map idfy-category-elements)
+        (add-root-category actions qualities)
         hashfy-remote-list
         )))
 
