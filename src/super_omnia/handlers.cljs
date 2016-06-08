@@ -3,10 +3,7 @@
                                    dispatch]]
             [reagent.core :refer [atom]]
             [super-omnia.helpers :as helpers]
-            [ajax.core :refer [GET POST]]))
-
-(def api-root-url "http://localhost:8080/adesign/api/project/1")
-(def resources-root-url "http://localhost:8080/adesign/api/resource/find/_")
+            [super-omnia.adesign-api :as api]))
 
 (def initial-state {:open-categories #{}
                     :tree-root 0
@@ -18,23 +15,16 @@
 (register-handler
  :initialise-db
  (fn [_ _]
-   (GET resources-root-url {:handler #(dispatch [:process-resource-icons %])
-                            :response-format :json
-                            :keywords? true })
-
-   (GET api-root-url {:handler #(dispatch [:process-root-request %1])
-                      :response-format :json
-                      :keywords? true})
+   (api/icons {:success #(dispatch [:process-resource-icons %1])})
+   (api/root {:success #(dispatch [:process-root-request %1])})
    initial-state))
 
 (register-handler
  :create-category
  (fn [app-state [_ params]]
-   (POST (str api-root-url "/category") {:params params
-                                         :handler #(dispatch [:process-new-category %1])
-                                         :response-format :json
-                                         :format :json
-                                         :keywords? true})
+   (api/create :category {:success #(dispatch [:process-new-category %1])
+                          :params params})
+
    app-state
    ))
 
