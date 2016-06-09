@@ -1,5 +1,5 @@
 (ns super-omnia.helpers
-  (:require [clojure.set  :refer [rename-keys]]))
+  (:require [clojure.set :refer [rename-keys]]))
 
 (defn toggl-set [set value]
   (if (get set value) (disj set value) (conj set value))
@@ -53,6 +53,12 @@
   (let [elements (:elements category)]
     (assoc category :elements (idfy-items elements))
     ))
+
+(defn remote-params [params root]
+  (-> params
+      (rename-keys {:selected-icon :resId :item-name :name})
+      (assoc :catId root)
+      ))
 
 (defn translate-remote-attributes [item]
   (let [translation {:catId :root :relActionsId :actions :relQualitiesId :qualities}]

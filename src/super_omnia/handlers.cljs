@@ -21,10 +21,13 @@
 
 (register-handler
  :create-category
- (fn [app-state [_ params]]
-   (api/create :category {:success #(dispatch [:process-new-category %1])
-                          :params params})
+ (fn [app-state _]
+   (let [params (get-in app-state [:forms (:current-element-form app-state)])
+         tree-root (:tree-root app-state)
+         remote-params (helpers/remote-params params tree-root)]
 
+     (api/create :category {:success #(dispatch [:process-new-category %1])
+                            :params remote-params}))
    app-state
    ))
 
@@ -37,15 +40,19 @@
 (register-handler
  :select-icon
  (fn [app-state [_ {id :id item-name :name}]]
-   (-> app-state
-       (assoc :selected-icon id)
-       (assoc :form/item-name item-name)
-       )))
+   (let [current-form (:current-element-form app-state)]
+     (-> app-state
+         (assoc-in [:forms current-form :selected-icon] id)
+         (assoc-in [:forms current-form :item-name] item-name)
+         ))
+   ))
 
 (register-handler
  :form/item-name
  (fn [app-state [_ name]]
-   (assoc app-state :form/item-name name)
+   (let [current-form (:current-element-form app-state)]
+     (assoc-in app-state [:forms current-form :item-name] name)
+     )
    ))
 
 (register-handler
@@ -78,7 +85,10 @@
  :toggl-action-modal
  (fn [app-state _]
    (let [open? (:action-modal-open? app-state)]
-     (assoc app-state :action-modal-open? (not open?))
+     (-> app-state
+         (assoc :action-modal-open? (not open?))
+         (assoc :current-element-form :category)
+         )
      )))
 
 (register-handler
