@@ -186,7 +186,7 @@
       [:div {:class "row"}
        [:div {:class "columns small-2 float-right"}
         [:button {:class "button success" :type "button"
-                  :on-click #(dispatch [:create-category])} "Salvar"]
+                  :on-click #(dispatch [:create-item])} "Salvar"]
         ]]
       ]]
     )

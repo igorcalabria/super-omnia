@@ -20,7 +20,7 @@
    initial-state))
 
 (register-handler
- :create-category
+ :create-item
  (fn [app-state _]
    (let [current-form (:current-element-form app-state)
          params (get-in app-state [:forms current-form])
