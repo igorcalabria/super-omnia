@@ -78,10 +78,17 @@
     (assoc-in app-state [:categories (:id category)] category)
     ))
 
+(defn add-new-element [app-state response category-id]
+  (-> app-state
+      (assoc-in [:categories category-id :elements] (:id response))
+      (assoc-in [:elements (:id response)] response)
+      ))
+
 (defn add-new-remote-item [app-state response {:keys [:kind :category-id]}]
   (cond
-    (= kind :category) (add-new-category app-state response))
-  )
+    (= kind :category) (add-new-category app-state response)
+    (= kind :element) (add-new-element app-state response category-id)
+    ))
 
 (defn add-root-category [actions qualities categories]
   (conj categories {:id 0 :name "Inicio" :actions actions :qualities qualities :root nil}))
@@ -91,11 +98,11 @@
         actions (map :id (:actions project))
         qualities (map :id (:qualities project))]
     (->> categories
-        (map translate-remote-attributes)
-        (map idfy-category-elements)
-        (add-root-category actions qualities)
-        hashfy-remote-list
-        )))
+         (map translate-remote-attributes)
+         (map idfy-category-elements)
+         (add-root-category actions qualities)
+         hashfy-remote-list
+         )))
 
 (defn build-element-list [acc category]
   (merge acc (hashfy-remote-list (:elements category)))
