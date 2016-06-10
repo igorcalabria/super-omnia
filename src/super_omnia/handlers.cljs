@@ -84,13 +84,18 @@
    ))
 
 (register-handler
+ :open-form-modal
+ (fn [app-state [_ kind]]
+   (-> app-state
+       (assoc :action-modal-open? true)
+       (assoc :current-element-form kind))
+   ))
+
+(register-handler
  :toggl-action-modal
  (fn [app-state _]
    (let [open? (:action-modal-open? app-state)]
-     (-> app-state
-         (assoc :action-modal-open? (not open?))
-         (assoc :current-element-form :category)
-         )
+     (assoc app-state :action-modal-open? (not open?))
      )))
 
 (register-handler

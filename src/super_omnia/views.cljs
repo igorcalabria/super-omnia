@@ -87,8 +87,8 @@
          )]
       )))
 
-(defn action-menu-item [text]
-  [:a {:on-click #(dispatch [:toggl-action-modal])} text]
+(defn action-menu-item [text kind]
+  [:a {:on-click #(dispatch [:open-form-modal kind])} text]
   )
 
 (defn actions-menu []
@@ -101,16 +101,14 @@
        [:div {:class (str (if @open? "is-open ")  "dropdown-pane")
               :style {:top "60px" :right "15px"}}
         [:ul {:class "vertical menu"}
-         [:li (action-menu-item "Adicionar Categoria")]
-         [:li (action-menu-item "Adicionar Elemento")]
-         [:li (action-menu-item "Adicionar Qualidade")]
-         [:li (action-menu-item "Adicionar Ação")]
+         [:li (action-menu-item "Adicionar Categoria" :category)]
+         [:li (action-menu-item "Adicionar Elemento" :element)]
+         [:li (action-menu-item "Adicionar Qualidade" :quality)]
+         [:li (action-menu-item "Adicionar Ação" :action)]
          ]
         ]
        ]
-      )
-    )
-  )
+      )))
 
 (defn icon-list [icons]
   [:div  {:class "row small-up-2 medium-up-4"}
