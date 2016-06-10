@@ -15,12 +15,18 @@
      ))
   )
 
+(defn- params-middleware [params kind category-id]
+  (if (= kind :category) (assoc params :catId category-id) params)
+  )
+
 (defn create [project category kind {:keys [:success :error :params]}]
-  (POST (resource-url kind project) {:params params
-                                     :handler success
-                                     :response-format :json
-                                     :format :json
-                                     :keywords? true}))
+  (let [processed-params (params-middleware params kind category)]
+    (POST (resource-url kind project) {:params processed-params
+                                       :handler success
+                                       :response-format :json
+                                       :format :json
+                                       :keywords? true})
+    ))
 
 (defn icons [{:keys [:success :error]}]
   (GET (resource-url :icons) {:handler success

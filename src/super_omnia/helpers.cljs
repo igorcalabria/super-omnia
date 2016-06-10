@@ -57,7 +57,6 @@
 (defn remote-params [params root]
   (-> params
       (rename-keys {:selected-icon :resId :item-name :name})
-      (assoc :catId root)
       ))
 
 (defn translate-remote-attributes [item]
