@@ -22,12 +22,14 @@
 (register-handler
  :create-category
  (fn [app-state _]
-   (let [params (get-in app-state [:forms (:current-element-form app-state)])
+   (let [current-form (:current-element-form app-state)
+         params (get-in app-state [:forms current-form])
          tree-root (:tree-root app-state)
-         remote-params (helpers/remote-params params tree-root)]
+         remote-params (helpers/remote-params params tree-root)
+         meta {:kind current-form :category-id tree-root}]
 
-     (api/create 1 tree-root :category {:success #(dispatch [:process-new-category %1])
-                                        :params remote-params}))
+     (api/create 1 tree-root current-form {:success #(dispatch [:process-new-item %1 meta])
+                                           :params remote-params}))
    app-state
    ))
 
@@ -92,8 +94,8 @@
      )))
 
 (register-handler
- :process-new-category
- (fn [app-state [_ response]]
+ :process-new-item
+ (fn [app-state [_ response meta]]
    (let [category (helpers/parse-remote-category response)]
      (-> app-state
          (assoc-in [:categories (:id category)] category)
