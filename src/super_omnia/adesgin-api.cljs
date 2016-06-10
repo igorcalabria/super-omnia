@@ -1,28 +1,33 @@
 (ns super-omnia.adesign-api
   (:require [ajax.core :refer [GET POST]]))
 
-;; TODO: Parametrize project id
-(def api-root "http://localhost:8080/adesign/api/project/1")
-(def resources-root-url "http://localhost:8080/adesign/api/resource/find/_")
+(def api-root "http://localhost:8080/adesign/api")
 
-(defn- resource-url [kind params]
-  (cond
-    (= kind :category) (str api-root "/category")
-    ))
+(defn- resource-url
+  ([kind] (resource-url kind 0 0))
+  ([kind project] (resource-url kind project 0))
+  ([kind project category]
+   (cond
+     (= kind :category) (str api-root "/project/" project "/category")
+     (= kind :icons) (str api-root "/resource/find/_")
+     (= kind :root) (str api-root "/project/" project)
+     )
+   )
+  )
 
-(defn create [kind {:keys [:success :error :params]}]
-  (POST (resource-url kind params) {:params params
-                                    :handler success
-                                    :response-format :json
-                                    :format :json
-                                    :keywords? true}))
+(defn create [project category kind {:keys [:success :error :params]}]
+  (POST (resource-url kind project) {:params params
+                                     :handler success
+                                     :response-format :json
+                                     :format :json
+                                     :keywords? true}))
 
 (defn icons [{:keys [:success :error]}]
-  (GET resources-root-url {:handler success
-                           :response-format :json
-                           :keywords? true }))
+  (GET (resource-url :icons) {:handler success
+                              :response-format :json
+                              :keywords? true }))
 
-(defn root [{:keys [:success :error]}]
-  (GET api-root {:handler success
-                     :response-format :json
-                     :keywords? true }))
+(defn root [project {:keys [:success :error]}]
+  (GET (resource-url :root project) {:handler success
+                                     :response-format :json
+                                     :keywords? true }))

@@ -16,7 +16,7 @@
  :initialise-db
  (fn [_ _]
    (api/icons {:success #(dispatch [:process-resource-icons %1])})
-   (api/root {:success #(dispatch [:process-root-request %1])})
+   (api/root 1 {:success #(dispatch [:process-root-request %1])})
    initial-state))
 
 (register-handler
@@ -26,8 +26,8 @@
          tree-root (:tree-root app-state)
          remote-params (helpers/remote-params params tree-root)]
 
-     (api/create :category {:success #(dispatch [:process-new-category %1])
-                            :params remote-params}))
+     (api/create 1 tree-root :category {:success #(dispatch [:process-new-category %1])
+                                        :params remote-params}))
    app-state
    ))
 
