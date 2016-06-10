@@ -96,13 +96,13 @@
 (register-handler
  :process-new-item
  (fn [app-state [_ response meta]]
-   (let [category (helpers/parse-remote-category response)]
-     (-> app-state
-         (assoc-in [:categories (:id category)] category)
-         (assoc :action-modal-open? false)
-         (dissoc :selected-icon)
-         (dissoc :form/item-name)
-         ))))
+   (-> app-state
+       (helpers/add-new-remote-item response meta)
+       (assoc :action-modal-open? false)
+       (dissoc :selected-icon)
+       (dissoc :form/item-name)
+       )
+   ))
 
 (register-handler
  :process-resource-icons

@@ -73,6 +73,16 @@
       translate-remote-attributes
       idfy-category-elements))
 
+(defn add-new-category [app-state response]
+  (let [category (parse-remote-category response)]
+    (assoc-in app-state [:categories (:id category)] category)
+    ))
+
+(defn add-new-remote-item [app-state response {:keys [:kind :category-id]}]
+  (cond
+    (= kind :category) (add-new-category app-state response))
+  )
+
 (defn add-root-category [actions qualities categories]
   (conj categories {:id 0 :name "Inicio" :actions actions :qualities qualities :root nil}))
 
