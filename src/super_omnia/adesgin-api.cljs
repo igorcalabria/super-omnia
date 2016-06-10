@@ -21,11 +21,11 @@
 
 (defn create [project category kind {:keys [:success :error :params]}]
   (let [processed-params (params-middleware params kind category)]
-    (POST (resource-url kind project) {:params processed-params
-                                       :handler success
-                                       :response-format :json
-                                       :format :json
-                                       :keywords? true})
+    (POST (resource-url kind project category) {:params processed-params
+                                                :handler success
+                                                :response-format :json
+                                                :format :json
+                                                :keywords? true})
     ))
 
 (defn icons [{:keys [:success :error]}]
