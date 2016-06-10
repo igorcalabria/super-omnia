@@ -11,8 +11,8 @@
      (= kind :category) (str api-root "/project/" project "/category")
      (= kind :icons) (str api-root "/resource/find/_")
      (= kind :root) (str api-root "/project/" project)
-     )
-   )
+     (= kind :element) (str api-root "/category/" category "/element")
+     ))
   )
 
 (defn create [project category kind {:keys [:success :error :params]}]
