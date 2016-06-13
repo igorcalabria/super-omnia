@@ -40,14 +40,6 @@
    ))
 
 (register-sub
- :form-params
- (fn [db _]
-   (let [selected-icon (reaction (:selected-icon @db))
-         item-name (reaction (:form/item-name @db))]
-     (reaction {:resId @selected-icon :name @item-name })
-     )))
-
-(register-sub
  :current-form
  (fn [db _]
    (reaction (:current-element-form @db))))
