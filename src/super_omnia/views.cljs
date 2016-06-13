@@ -121,8 +121,8 @@
    ]
   )
 
-(defn icon-chooser []
-  (let [resource-icons (subscribe [:resource-icons])]
+(defn icon-chooser [source]
+  (let [resource-icons (subscribe [source])]
     (fn []
       [:div
        [:div {:class "row"}
@@ -176,7 +176,7 @@
     [:div
      [:h5 {:class "text-center"} (str "Criar " form-name)]
      [:form
-      [:div {:class "row"} [icon-chooser]]
+      [:div {:class "row"} [icon-chooser :resource-icons]]
       [:div {:class "row"}
        [selected-icon-input]]
       [:div {:class "row"}
