@@ -162,34 +162,37 @@
   (let [name (subscribe [:form/item-name])]
     (fn []
       [:div {:class "columns small-7"}
-       [:label "Nome"
+       [:label "Legenda"
         [:input {:type "text"
                  :value @name
                  :on-change #(dispatch [:form/item-name (-> % .-target .-value)])}]
         ]
        [:p {:class "help-text"}
-        "Você pode escolher outro nome para a categoria"
+        "Você pode escolher outra legenda"
         ]
        ]
       )))
 
 (defn modal-content []
-  (fn []
-    [:div
-     [:h5 {:class "text-center"} "Nova Categoria"]
-     [:form
-      [:div {:class "row"} [icon-chooser]]
-      [:div {:class "row"}
-       [selected-icon-input]]
-      [:div {:class "row"}
-       [item-name-input]]
-      [:div {:class "row"}
-       [:div {:class "columns small-2 float-right"}
-        [:button {:class "button success" :type "button"
-                  :on-click #(dispatch [:create-item])} "Salvar"]
-        ]]
-      ]]
-    )
+  (let [current-form (subscribe [:current-form])]
+    (fn []
+      (let [form-name (cond (= @current-form :category) "Categoria"
+                            (= @current-form :element) "Elemento")]
+        [:div
+         [:h5 {:class "text-center"} (str "Criar " form-name)]
+         [:form
+          [:div {:class "row"} [icon-chooser]]
+          [:div {:class "row"}
+           [selected-icon-input]]
+          [:div {:class "row"}
+           [item-name-input]]
+          [:div {:class "row"}
+           [:div {:class "columns small-2 float-right"}
+            [:button {:class "button success" :type "button"
+                      :on-click #(dispatch [:create-item])} "Salvar"]
+            ]]
+          ]])
+      ))
   )
 
 (defn action-modal []

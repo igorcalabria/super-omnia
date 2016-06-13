@@ -48,6 +48,11 @@
      )))
 
 (register-sub
+ :current-form
+ (fn [db _]
+   (reaction (:current-element-form @db))))
+
+(register-sub
  :selected-icon
  (fn [db _]
    (let [icons (reaction (:resource-icons @db))
