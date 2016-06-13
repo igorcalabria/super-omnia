@@ -170,27 +170,30 @@
        ]
       )))
 
+(defn item-form [current-form]
+  (let [form-name (cond (= @current-form :category) "Categoria"
+                        (= @current-form :element) "Elemento")]
+    [:div
+     [:h5 {:class "text-center"} (str "Criar " form-name)]
+     [:form
+      [:div {:class "row"} [icon-chooser]]
+      [:div {:class "row"}
+       [selected-icon-input]]
+      [:div {:class "row"}
+       [item-name-input]]
+      [:div {:class "row"}
+       [:div {:class "columns small-2 float-right"}
+        [:button {:class "button success" :type "button"
+                  :on-click #(dispatch [:create-item])} "Salvar"]
+        ]]
+      ]])
+  )
+
 (defn modal-content []
   (let [current-form (subscribe [:current-form])]
     (fn []
-      (let [form-name (cond (= @current-form :category) "Categoria"
-                            (= @current-form :element) "Elemento")]
-        [:div
-         [:h5 {:class "text-center"} (str "Criar " form-name)]
-         [:form
-          [:div {:class "row"} [icon-chooser]]
-          [:div {:class "row"}
-           [selected-icon-input]]
-          [:div {:class "row"}
-           [item-name-input]]
-          [:div {:class "row"}
-           [:div {:class "columns small-2 float-right"}
-            [:button {:class "button success" :type "button"
-                      :on-click #(dispatch [:create-item])} "Salvar"]
-            ]]
-          ]])
-      ))
-  )
+      [item-form current-form]
+      )))
 
 (defn action-modal []
   (let [open? (subscribe [:action-modal])]
