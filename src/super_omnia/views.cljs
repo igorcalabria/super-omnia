@@ -171,8 +171,8 @@
       )))
 
 (defn item-form [current-form]
-  (let [form-name (cond (= @current-form :category) "Categoria"
-                        (= @current-form :element) "Elemento")]
+  (let [form-name (cond (= current-form :category) "Categoria"
+                        (= current-form :element) "Elemento")]
     [:div
      [:h5 {:class "text-center"} (str "Criar " form-name)]
      [:form
@@ -192,7 +192,7 @@
 (defn modal-content []
   (let [current-form (subscribe [:current-form])]
     (fn []
-      [item-form current-form]
+      [item-form @current-form]
       )))
 
 (defn action-modal []
