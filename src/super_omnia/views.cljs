@@ -102,10 +102,7 @@
               :style {:top "60px" :right "15px"}}
         [:ul {:class "vertical menu"}
          [:li (action-menu-item "Adicionar Categoria" :category)]
-         [:li (action-menu-item "Adicionar Elemento" :element)]
-         [:li (action-menu-item "Adicionar Qualidade" :quality)]
-         [:li (action-menu-item "Adicionar Ação" :action)]
-         ]
+         [:li (action-menu-item "Adicionar Elemento" :element)]]
         ]
        ]
       )))
