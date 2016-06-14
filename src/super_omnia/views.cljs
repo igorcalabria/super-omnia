@@ -102,7 +102,9 @@
               :style {:top "60px" :right "15px"}}
         [:ul {:class "vertical menu"}
          [:li (action-menu-item "Adicionar Categoria" :category)]
-         [:li (action-menu-item "Adicionar Elemento" :element)]]
+         [:li (action-menu-item "Adicionar Elemento" :element)]
+         [:li (action-menu-item "Associar Ação" :assoc-action)]
+         ]
         ]
        ]
       )))
@@ -170,6 +172,24 @@
        ]
       )))
 
+(defn assoc-sugestion-form [current-form]
+  (let [form-name (cond (= current-form :assoc-action) "Ação")]
+    [:div
+     [:h5.text-center (str "Associar Nova " form-name)]
+     [:form
+      [:div.row [icon-chooser :all-actions]]
+      [:div.row [selected-icon-input]]
+      [:div.row
+       [:div.columns.small-2.float-right
+        [:button.button.success {:type "button"
+                                 :on-click #(println "not implemented")} "Salvar"]
+        ]
+       ]
+      ]
+     ]
+    )
+  )
+
 (defn item-form [current-form]
   (let [form-name (cond (= current-form :category) "Categoria"
                         (= current-form :element) "Elemento")]
@@ -177,8 +197,7 @@
      [:h5 {:class "text-center"} (str "Criar " form-name)]
      [:form
       [:div {:class "row"} [icon-chooser :resource-icons]]
-      [:div {:class "row"}
-       [selected-icon-input]]
+      [:div {:class "row"} [selected-icon-input]]
       [:div {:class "row"}
        [item-name-input]]
       [:div {:class "row"}
@@ -192,7 +211,12 @@
 (defn modal-content []
   (let [current-form (subscribe [:current-form])]
     (fn []
-      [item-form @current-form]
+      (let [item-form? (contains? #{:element :category} @current-form)
+            assoc-form? (contains? #{:assoc-action :assoc-category} @current-form)]
+        (cond
+          item-form? [item-form @current-form]
+          assoc-form? [assoc-sugestion-form @current-form]
+          ))
       )))
 
 (defn action-modal []

@@ -45,6 +45,24 @@
    (reaction (:current-element-form @db))))
 
 (register-sub
+ :all-actions
+ (fn [db _]
+   (let [search (reaction (:icon-search-value @db))
+         actions (reaction (vals (:actions @db)))]
+     (reaction (->> @actions (filter #(str/includes? (:name %) @search))))
+     )
+   ))
+
+(register-sub
+ :all-qualities
+ (fn [db _]
+   (let [search (reaction (:icon-search-value @db))
+         actions (reaction (vals (:qualities @db)))]
+     (reaction (->> @actions (filter #(str/includes? (:name %) @search))))
+     )
+   ))
+
+(register-sub
  :selected-icon
  (fn [db _]
    (let [current-form (reaction (:current-element-form @db))
