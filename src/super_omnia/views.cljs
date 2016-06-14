@@ -182,7 +182,7 @@
       [:div.row
        [:div.columns.small-2.float-right
         [:button.button.success {:type "button"
-                                 :on-click #(println "not implemented")} "Salvar"]
+                                 :on-click #(dispatch [:assoc-sugestion])} "Salvar"]
         ]
        ]
       ]

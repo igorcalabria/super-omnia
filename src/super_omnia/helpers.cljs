@@ -58,11 +58,22 @@
 (defn filter-by-name [coll name]
   (filter #(str/includes? (:name %) name) coll))
 
+(defn replace-with-id [coll k]
+  (assoc coll k (get-in coll [k :id]))
+  )
+
 (defn remote-params [params root]
   (-> params
-      (assoc :selected-icon (get-in params [:selected-icon :id]))
+      (replace-with-id :selected-icon)
       (rename-keys {:selected-icon :resId :item-name :name})
       ))
+
+(defn assoc-remote-params [params kind]
+  (let [key-name (if (= kind :assoc-action) :actionId :qualityId)]
+    (-> params
+        (replace-with-id :selected-icon)
+        (select-keys [:selected-icon])
+        (rename-keys {:selected-icon key-name}))))
 
 (defn translate-remote-attributes [item]
   (let [translation {:catId :root :relActionsId :actions :relQualitiesId :qualities}]

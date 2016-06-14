@@ -34,6 +34,21 @@
    ))
 
 (register-handler
+ :assoc-sugestion
+ (fn [app-state _]
+   (let [current-form (:current-element-form app-state)
+         params (get-in app-state [:forms current-form])
+         tree-root (:tree-root app-state)
+         remote-params (helpers/assoc-remote-params params current-form)
+         meta {:kind current-form :category-id tree-root}]
+
+     (api/create 1 tree-root current-form {:success #(dispatch [:process-new-item %1 meta])
+                                           :params remote-params})
+     app-state
+     )
+   ))
+
+(register-handler
  :icon-search
  (fn [app-state [_ search-value]]
    (assoc app-state :icon-search-value search-value)
