@@ -60,6 +60,7 @@
 
 (defn remote-params [params root]
   (-> params
+      (assoc :selected-icon (get-in params [:selected-icon :id]))
       (rename-keys {:selected-icon :resId :item-name :name})
       ))
 
