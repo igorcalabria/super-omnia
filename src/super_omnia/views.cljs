@@ -104,6 +104,7 @@
          [:li (action-menu-item "Adicionar Categoria" :category)]
          [:li (action-menu-item "Adicionar Elemento" :element)]
          [:li (action-menu-item "Associar Ação" :assoc-action)]
+         [:li (action-menu-item "Associar Qualidade" :assoc-quality)]
          ]
         ]
        ]
@@ -173,11 +174,12 @@
       )))
 
 (defn assoc-sugestion-form [current-form]
-  (let [form-name (cond (= current-form :assoc-action) "Ação")]
+  (let [form-name (if (= current-form :assoc-action) "Ação" "Qualidade")
+        icon-source (if (= current-form :assoc-action) :all-actions :all-qualities)]
     [:div
      [:h5.text-center (str "Associar Nova " form-name)]
      [:form
-      [:div.row [icon-chooser :all-actions]]
+      [:div.row [icon-chooser icon-source]]
       [:div.row [selected-icon-input]]
       [:div.row
        [:div.columns.small-2.float-right
@@ -212,7 +214,7 @@
   (let [current-form (subscribe [:current-form])]
     (fn []
       (let [item-form? (contains? #{:element :category} @current-form)
-            assoc-form? (contains? #{:assoc-action :assoc-category} @current-form)]
+            assoc-form? (contains? #{:assoc-action :assoc-quality} @current-form)]
         (cond
           item-form? [item-form @current-form]
           assoc-form? [assoc-sugestion-form @current-form]

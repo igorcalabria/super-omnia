@@ -13,6 +13,7 @@
      (= kind :root) (str api-root "/project/" project)
      (= kind :element) (str api-root "/category/" category "/element")
      (= kind :assoc-action) (str api-root "/category/" category "/relatedAction")
+     (= kind :assoc-quality) (str api-root "/category/" category "/relatedQuality")
      ))
   )
 
