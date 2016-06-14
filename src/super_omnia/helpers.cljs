@@ -100,10 +100,16 @@
       (assoc-in [:elements (:id response)] response)
       ))
 
+(defn add-new-sugestion [app-state response category-id kind]
+  (assoc-in app-state [kind] (:id response))
+  )
+
 (defn add-new-remote-item [app-state response {:keys [:kind :category-id]}]
   (cond
     (= kind :category) (add-new-category app-state response)
     (= kind :element) (add-new-element app-state response category-id)
+    (= kind :assoc-action) (add-new-sugestion app-state response category-id :actions)
+    (= kind :assoc-quality) (add-new-sugestion app-state response category-id :qualities)
     ))
 
 (defn add-root-category [actions qualities categories]
