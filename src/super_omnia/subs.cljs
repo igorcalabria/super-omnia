@@ -47,10 +47,9 @@
 (register-sub
  :selected-icon
  (fn [db _]
-   (let [icons (reaction (:resource-icons @db))
-         current-form (reaction (:current-element-form @db))
+   (let [current-form (reaction (:current-element-form @db))
          selected (reaction (get-in @db [:forms @current-form :selected-icon]))]
-     (reaction (get @icons @selected)))
+     (reaction @selected))
    ))
 
 (register-sub

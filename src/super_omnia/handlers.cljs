@@ -41,10 +41,10 @@
 
 (register-handler
  :select-icon
- (fn [app-state [_ {id :id item-name :name}]]
+ (fn [app-state [_ {id :id item-name :name, :as selected}]]
    (let [current-form (:current-element-form app-state)]
      (-> app-state
-         (assoc-in [:forms current-form :selected-icon] id)
+         (assoc-in [:forms current-form :selected-icon] selected)
          (assoc-in [:forms current-form :item-name] item-name)
          ))
    ))
