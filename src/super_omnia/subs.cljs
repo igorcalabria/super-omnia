@@ -35,7 +35,7 @@
  (fn [db _]
    (let [icons (reaction (vals (:resource-icons @db)))
          search (reaction (:icon-search-value @db))]
-     (reaction (->> @icons (filter #(str/includes? (:name %) @search))))
+     (reaction (helpers/filter-by-name @icons @search))
      )
    ))
 
@@ -49,7 +49,7 @@
  (fn [db _]
    (let [search (reaction (:icon-search-value @db))
          actions (reaction (vals (:actions @db)))]
-     (reaction (->> @actions (filter #(str/includes? (:name %) @search))))
+     (reaction (helpers/filter-by-name @actions @search))
      )
    ))
 
@@ -57,8 +57,8 @@
  :all-qualities
  (fn [db _]
    (let [search (reaction (:icon-search-value @db))
-         actions (reaction (vals (:qualities @db)))]
-     (reaction (->> @actions (filter #(str/includes? (:name %) @search))))
+         qualities (reaction (vals (:qualities @db)))]
+     (reaction (helpers/filter-by-name @qualities @search))
      )
    ))
 

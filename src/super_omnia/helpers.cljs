@@ -1,5 +1,6 @@
 (ns super-omnia.helpers
-  (:require [clojure.set :refer [rename-keys]]))
+  (:require [clojure.set :refer [rename-keys]]
+            [clojure.string :as str]))
 
 (defn toggl-set [set value]
   (if (get set value) (disj set value) (conj set value))
@@ -53,6 +54,9 @@
   (let [elements (:elements category)]
     (assoc category :elements (idfy-items elements))
     ))
+
+(defn filter-by-name [coll name]
+  (filter #(str/includes? (:name %) name) coll))
 
 (defn remote-params [params root]
   (-> params
