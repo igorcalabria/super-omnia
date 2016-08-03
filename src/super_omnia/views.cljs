@@ -1,7 +1,7 @@
 (ns super-omnia.views
   (:require [re-frame.core :refer [dispatch
                                    subscribe]]
-            [super-omnia.helpers :as helpers]))
+           [super-omnia.helpers :as helpers]))
 
 (defn fixed-category-child [category kind name]
   (let [category-id (:id category)]
@@ -124,8 +124,8 @@
    ]
   )
 
-(defn icon-chooser [source]
-  (let [resource-icons (subscribe [source])]
+(defn icon-chooser []
+  (let [resource-icons (subscribe [:form-icons])]
     (fn []
       [:div
        [:div {:class "row"}
@@ -174,12 +174,11 @@
       )))
 
 (defn assoc-sugestion-form [current-form]
-  (let [form-name (if (= current-form :assoc-action) "Ação" "Qualidade")
-        icon-source (if (= current-form :assoc-action) :all-actions :all-qualities)]
+  (let [form-name (if (= current-form :assoc-action) "Ação" "Qualidade")]
     [:div
      [:h5.text-center (str "Associar Nova " form-name)]
      [:form
-      [:div.row [icon-chooser icon-source]]
+      [:div.row [icon-chooser]]
       [:div.row [selected-icon-input]]
       [:div.row
        [:div.columns.small-2.float-right
@@ -198,7 +197,7 @@
     [:div
      [:h5 {:class "text-center"} (str "Criar " form-name)]
      [:form
-      [:div {:class "row"} [icon-chooser :resource-icons]]
+      [:div {:class "row"} [icon-chooser]]
       [:div {:class "row"} [selected-icon-input]]
       [:div {:class "row"}
        [item-name-input]]

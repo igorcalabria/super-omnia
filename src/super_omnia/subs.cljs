@@ -40,27 +40,24 @@
    ))
 
 (register-sub
+ :form-icons
+ (fn [db _]
+   (let [current-form (reaction (:current-element-form @db))
+         search (reaction (:icon-search-value @db))
+         sources {:category :resource-icons
+                  :element :resource-icons
+                  :assoc-action :actions
+                  :assoc-quality :qualities}
+         current-source (reaction (get sources @current-form))
+         icons (reaction (vals (get @db @current-source)))]
+     (reaction (helpers/filter-by-name @icons @search))
+     )
+   ))
+
+(register-sub
  :current-form
  (fn [db _]
    (reaction (:current-element-form @db))))
-
-(register-sub
- :all-actions
- (fn [db _]
-   (let [search (reaction (:icon-search-value @db))
-         actions (reaction (vals (:actions @db)))]
-     (reaction (helpers/filter-by-name @actions @search))
-     )
-   ))
-
-(register-sub
- :all-qualities
- (fn [db _]
-   (let [search (reaction (:icon-search-value @db))
-         qualities (reaction (vals (:qualities @db)))]
-     (reaction (helpers/filter-by-name @qualities @search))
-     )
-   ))
 
 (register-sub
  :selected-icon
