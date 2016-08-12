@@ -44,12 +44,11 @@
       )))
 
 (defn element-display [{:keys [:name :icon :id]}]
-  [:div {:class "columns"}
-   [:div {:class "item-view text-center"}
-    [:label {:class "item-label" } name]
-    [:img {:on-click #(dispatch [:open-edit-form-modal :element id])
-           :class "item-icon thumbnail"
-           :src icon}]]])
+  [:div {:class "item-view text-center"}
+   [:label {:class "item-label" } name]
+   [:img {:on-click #(dispatch [:open-edit-form-modal :element id])
+          :class "item-icon thumbnail"
+          :src icon}]])
 
 (defn items-list []
   (let [items (subscribe [:current-items])]
@@ -58,8 +57,7 @@
        [:div {:class "row small-up-2 medium-up-3 large-up-6"}
         (for [{:keys [:name :icon :id] :as element} @items]
           ^{:key id}
-          [element-display element]
-          )]])))
+          [:div.columns [element-display element]])]])))
 
 (defn item-filter [text kind selected]
   [:li {:class (if (= kind selected) "selected-category-item")}
