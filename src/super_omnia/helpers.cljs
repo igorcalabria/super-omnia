@@ -14,6 +14,13 @@
 (defn items-from-ids [items ids]
   (map #(get items %) ids))
 
+(defn find-item [app-state kind id]
+  (let [kind-map {:category :categories
+                  :quality :qualities
+                  :action :actions}
+        look-up-kind (kind kind-map)]
+    (get-in app-state [look-up-kind id])))
+
 (defn breadcrumb-list [categories root]
   (loop [root-id root
          result '()]
