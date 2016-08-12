@@ -75,6 +75,12 @@
      )))
 
 (register-sub
+ :form-action
+ (fn [db _]
+   (let [action (reaction (:form-action @db))]
+     (reaction @action))))
+
+(register-sub
  :action-menu
  (fn [db _]
    (reaction (:action-menu-open? @db))

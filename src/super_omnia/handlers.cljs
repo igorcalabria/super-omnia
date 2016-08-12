@@ -103,6 +103,7 @@
  (fn [app-state [_ kind]]
    (-> app-state
        (assoc :action-modal-open? true)
+       (assoc :form-action :new)
        (assoc :current-element-form kind))
    ))
 

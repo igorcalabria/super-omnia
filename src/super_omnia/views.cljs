@@ -195,10 +195,13 @@
 
 (defn item-form []
   (let [current-form (subscribe [:current-form])
+        action (subscribe [:form-action])
+        action-name (if (= @action :edit) "Editar" "Criar")
+        dispatch-action (if (= @action :edit) :edit-item :create-item)
         form-name (cond (= @current-form :category) "Categoria"
                         (= @current-form :element) "Elemento")]
     [:div
-     [:h5 {:class "text-center"} (str "Criar " form-name)]
+     [:h5 {:class "text-center"} (str action-name " " form-name)]
      [:form
       [:div {:class "row"} [icon-chooser]]
       [:div {:class "row"} [selected-icon-input]]
@@ -207,10 +210,7 @@
       [:div {:class "row"}
        [:div {:class "columns small-2 float-right"}
         [:button {:class "button success" :type "button"
-                  :on-click #(dispatch [:create-item])} "Salvar"]
-        ]]
-      ]])
-  )
+                  :on-click #(dispatch [dispatch-action])} "Salvar"]]]]]))
 
 (defn modal-content []
   (let [current-form (subscribe [:current-form])]
