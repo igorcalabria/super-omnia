@@ -108,6 +108,18 @@
    ))
 
 (register-handler
+ :open-edit-form-modal
+ (fn [app-state [_ kind model-id]]
+   (let [model (helpers/find-item app-state kind model-id)
+         current-icon {:id (:resId model) :name "sem alterações"}]
+     (-> app-state
+         (assoc :action-modal-open? true)
+         (assoc :current-element-form kind)
+         (assoc :form-action :edit)
+         (assoc-in [:forms kind :item-name] (:name model))
+         (assoc-in [:forms kind :selected-icon] current-icon)))))
+
+(register-handler
  :toggl-action-modal
  (fn [app-state _]
    (let [open? (:action-modal-open? app-state)]
