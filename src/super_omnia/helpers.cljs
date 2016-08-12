@@ -17,7 +17,8 @@
 (defn find-item [app-state kind id]
   (let [kind-map {:category :categories
                   :quality :qualities
-                  :action :actions}
+                  :action :actions
+                  :element :elements}
         look-up-kind (kind kind-map)]
     (get-in app-state [look-up-kind id])))
 
