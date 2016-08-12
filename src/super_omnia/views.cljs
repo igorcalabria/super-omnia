@@ -47,7 +47,9 @@
   [:div {:class "columns"}
    [:div {:class "item-view text-center"}
     [:label {:class "item-label" } name]
-    [:img {:class "item-icon thumbnail" :src icon}]]])
+    [:img {:on-click #(dispatch [:open-edit-form-modal :element id])
+           :class "item-icon thumbnail"
+           :src icon}]]])
 
 (defn items-list []
   (let [items (subscribe [:current-items])]
