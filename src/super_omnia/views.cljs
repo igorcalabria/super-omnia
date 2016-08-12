@@ -193,9 +193,10 @@
          ]
         ))))
 
-(defn item-form [current-form]
-  (let [form-name (cond (= current-form :category) "Categoria"
-                        (= current-form :element) "Elemento")]
+(defn item-form []
+  (let [current-form (subscribe [:current-form])
+        form-name (cond (= @current-form :category) "Categoria"
+                        (= @current-form :element) "Elemento")]
     [:div
      [:h5 {:class "text-center"} (str "Criar " form-name)]
      [:form
@@ -217,8 +218,8 @@
       (let [item-form? (contains? #{:element :category} @current-form)
             assoc-form? (contains? #{:assoc-action :assoc-quality} @current-form)]
         (cond
-          item-form? [item-form @current-form]
-          assoc-form? [assoc-sugestion-form @current-form]
+          item-form? [item-form]
+          assoc-form? [assoc-sugestion-form]
           ))
       )))
 
