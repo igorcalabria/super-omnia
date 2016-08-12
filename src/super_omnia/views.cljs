@@ -173,23 +173,25 @@
        ]
       )))
 
-(defn assoc-sugestion-form [current-form]
-  (let [form-name (if (= current-form :assoc-action) "Ação" "Qualidade")]
-    [:div
-     [:h5.text-center (str "Associar Nova " form-name)]
-     [:form
-      [:div.row [icon-chooser]]
-      [:div.row [selected-icon-input]]
-      [:div.row
-       [:div.columns.small-2.float-right
-        [:button.button.success {:type "button"
-                                 :on-click #(dispatch [:assoc-sugestion])} "Salvar"]
-        ]
-       ]
-      ]
-     ]
-    )
-  )
+(defn assoc-sugestion-form []
+  (let [current-form (subscribe [:current-form])]
+    (fn []
+      (let [form-name (if (= @current-form :assoc-action) "Ação" "Qualidade")
+            icon-source (if (= @current-form :assoc-action) :all-actions :all-qualities)]
+        [:div
+         [:h5.text-center (str "Associar Nova " form-name)]
+         [:form
+          [:div.row [icon-chooser icon-source]]
+          [:div.row [selected-icon-input]]
+          [:div.row
+           [:div.columns.small-2.float-right
+            [:button.button.success {:type "button"
+                                     :on-click #(dispatch [:assoc-sugestion])} "Salvar"]
+            ]
+           ]
+          ]
+         ]
+        ))))
 
 (defn item-form [current-form]
   (let [form-name (cond (= current-form :category) "Categoria"
