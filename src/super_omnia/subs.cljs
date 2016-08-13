@@ -20,7 +20,7 @@
    ))
 
 (register-sub
- :current-items
+ :current-elements
  (fn [db _]
    (let [id (reaction (:tree-root @db))
          selected-filter (reaction (:selected @db))

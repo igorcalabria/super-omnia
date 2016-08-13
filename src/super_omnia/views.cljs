@@ -51,11 +51,11 @@
           :src icon}]])
 
 (defn items-list []
-  (let [items (subscribe [:current-items])]
+  (let [elements (subscribe [:current-elements])]
     (fn []
       [:div
        [:div.row.small-up-2.medium-up-3.large-up-6
-        (for [{:keys [:name :icon :id] :as element} @items]
+        (for [{:keys [:name :icon :id] :as element} @elements]
           ^{:key id}
           [:div.columns [element-display element]])]])))
 
