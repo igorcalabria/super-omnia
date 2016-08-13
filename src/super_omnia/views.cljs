@@ -54,7 +54,7 @@
   (let [items (subscribe [:current-items])]
     (fn []
       [:div
-       [:div {:class "row small-up-2 medium-up-3 large-up-6"}
+       [:div.row.small-up-2.medium-up-3.large-up-6
         (for [{:keys [:name :icon :id] :as element} @items]
           ^{:key id}
           [:div.columns [element-display element]])]])))
