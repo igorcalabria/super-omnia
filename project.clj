@@ -12,9 +12,11 @@
                   :exclusions [org.clojure/tools.reader]]
                  [reagent "0.5.1"]
                  [re-frame "0.7.0"]
-                 [cljs-ajax "0.5.5"]]
+                 [cljs-ajax "0.5.5"]
+                 [environ "1.1.0"]]
 
   :plugins [[lein-figwheel "0.5.3"]
+            [lein-environ "1.1.0"]
             [lein-cljsbuild "1.1.3" :exclusions [[org.clojure/clojure]]]]
 
   :source-paths ["src"]
