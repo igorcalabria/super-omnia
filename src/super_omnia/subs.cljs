@@ -20,6 +20,17 @@
    ))
 
 (register-sub
+ :current-sub-categories
+ (fn [db _]
+   (let [root (reaction (:tree-root @db))
+         selected-filter (reaction (:selected @db))
+         categories (reaction (:categories @db))
+         child-categories (reaction (helpers/child-categories @categories @root))]
+     (if (= @selected-filter :elements)
+       (reaction @child-categories)
+       (reaction [])))))
+
+(register-sub
  :current-elements
  (fn [db _]
    (let [id (reaction (:tree-root @db))

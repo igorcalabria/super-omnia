@@ -56,3 +56,7 @@
 .category-expander:before {
   font-size: 80%;
 }
+
+.icon-padding {
+  padding-right: 5px;
+}

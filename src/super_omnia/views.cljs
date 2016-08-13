@@ -50,11 +50,23 @@
           :class "item-icon thumbnail"
           :src icon}]])
 
+(defn category-display [{:keys [:name :icon :id]}]
+  [:div {:class "item-view text-center"}
+   [:label {:class "item-label"
+            :on-click #(dispatch [:change-tree-root id])}
+    [:a [:i.fa.fa-folder.icon-padding] name]]
+   [:img {:on-click #(dispatch [:open-edit-form-modal :category id])
+          :class "item-icon thumbnail"
+          :src icon}]])
+
 (defn items-list []
-  (let [elements (subscribe [:current-elements])]
+  (let [elements (subscribe [:current-elements])
+        sub-categories (subscribe [:current-sub-categories])]
     (fn []
       [:div
        [:div.row.small-up-2.medium-up-3.large-up-6
+        (for [{:keys [:name :icon :id] :as category} @sub-categories]
+          [:div.columns [category-display category]])
         (for [{:keys [:name :icon :id] :as element} @elements]
           ^{:key id}
           [:div.columns [element-display element]])]])))
