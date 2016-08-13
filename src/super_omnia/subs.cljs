@@ -24,11 +24,8 @@
  (fn [db _]
    (let [id (reaction (:tree-root @db))
          selected-filter (reaction (:selected @db))
-         ids (reaction (helpers/category-items @id @selected-filter (:categories @db)))
-         ]
-
-     (reaction (helpers/items-from-ids (get @db @selected-filter) @ids))
-     )))
+         ids (reaction (helpers/category-items @id @selected-filter (:categories @db)))]
+     (reaction (helpers/items-from-ids (get @db @selected-filter) @ids)))))
 
 (register-sub
  :resource-icons
