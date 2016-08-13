@@ -85,7 +85,10 @@
   ;; Please see:
   ;; https://github.com/bhauman/lein-figwheel/wiki/Using-the-Figwheel-REPL-within-NRepl
 
-  :profiles {:dev {:dependencies [[figwheel-sidecar "0.5.3"]
+  :profiles {:production {:env {:adesign-api-url "http://150.161.2.78:8080/adesign/api"}}
+
+             :dev {:env {:adesign-api-url "http://localhost:3449/adesign/api"}
+                   :dependencies [[figwheel-sidecar "0.5.3"]
                                   [com.cemerick/piggieback "0.2.1"]
                                   [ring/ring-core "1.4.0"]
                                   [ring/ring-devel "1.4.0"]

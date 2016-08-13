@@ -1,7 +1,8 @@
 (ns super-omnia.adesign-api
-  (:require [ajax.core :refer [GET POST]]))
+  (:require [ajax.core :refer [GET POST]])
+  (:require-macros [super-omnia.env :refer [cljs-env]]))
 
-(def api-root "http://localhost:3449/adesign/api")
+(def api-root (cljs-env :adesign-api-url))
 
 (defn- resource-url
   ([kind] (resource-url kind 0 0))
