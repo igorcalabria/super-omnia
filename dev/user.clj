@@ -1,6 +1,5 @@
 (ns user
-  (:require [ring.adapter.jetty :as jetty]
-            [compojure.core :refer [POST GET defroutes]]
+  (:require [compojure.core :refer [POST GET defroutes]]
             [ring.middleware.reload :refer [wrap-reload]]
             [ring.middleware.json :refer [wrap-json-response]]
             [ring.util.response :refer [response]]
@@ -40,11 +39,4 @@
 
 (def cors-app
   (wrap-cors reloadable-app :access-control-allow-origin [#"http://localhost:3449"]
-                       :access-control-allow-methods [:get :put :post :delete]))
-
-(defonce server (jetty/run-jetty #'cors-app {:port 8080 :join? false}))
-
-(defn reload []
-  (.stop server)
-  (.start server)
-  )
+             :access-control-allow-methods [:get :put :post :delete]))

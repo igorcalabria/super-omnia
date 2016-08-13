@@ -1,7 +1,7 @@
 (ns super-omnia.adesign-api
   (:require [ajax.core :refer [GET POST]]))
 
-(def api-root "http://localhost:8080/adesign/api")
+(def api-root "http://localhost:3449/adesign/api")
 
 (defn- resource-url
   ([kind] (resource-url kind 0 0))

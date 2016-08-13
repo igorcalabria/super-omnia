@@ -57,7 +57,7 @@
              ;; server, this is for simple ring servers, if this
              ;; doesn't work for you just run your own server :) (see lien-ring)
 
-             ;; :ring-handler hello_world.server/handler
+             :ring-handler user/cors-app
 
              ;; To be able to open files in your editor from the heads up display
              ;; you will need to put a script on your path.
@@ -88,7 +88,6 @@
                                   [ring/ring-core "1.4.0"]
                                   [ring/ring-devel "1.4.0"]
                                   [compojure "1.5.0"]
-                                  [ring/ring-jetty-adapter "1.4.0"]
                                   [ring/ring-json "0.4.0"]
                                   [cheshire "5.6.1"]
                                   [ring-cors "0.1.7"]]
