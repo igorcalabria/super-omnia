@@ -104,6 +104,8 @@
    (-> app-state
        (assoc :action-modal-open? true)
        (assoc :form-action :new)
+       (assoc-in [:forms kind :item-name] nil)
+       (assoc-in [:forms kind :selected-icon] nil)
        (assoc :current-element-form kind))
    ))
 
