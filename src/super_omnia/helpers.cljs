@@ -91,9 +91,11 @@
     (assoc-in app-state [:categories (:id category)] category)))
 
 (defn add-new-element [app-state response category-id]
-  (-> app-state
-      (assoc-in [:categories category-id :elements] (:id response))
-      (assoc-in [:elements (:id response)] response)))
+  (let [category-elements (get-in app-state [:categories category-id :elements])
+        new-elements (conj category-elements (:id response))]
+    (-> app-state
+        (assoc-in [:categories category-id :elements] new-elements)
+        (assoc-in [:elements (:id response)] response))))
 
 (defn add-new-sugestion [app-state response category-id kind]
   (assoc-in app-state [kind] (:id response))
