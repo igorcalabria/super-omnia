@@ -1,5 +1,5 @@
 (ns super-omnia.adesign-api
-  (:require [ajax.core :refer [GET POST]])
+  (:require [ajax.core :refer [GET POST PUT]])
   (:require-macros [super-omnia.env :refer [cljs-env]]))
 
 (def api-root (cljs-env :adesign-api-url))
@@ -35,7 +35,7 @@
 
 (defn create [project category kind {:keys [:success :error :params]}]
   (let [processed-params (params-middleware params kind category)]
-    (POST (resource-url kind project category) {:params processed-params
+    (PUT (resource-url kind project category) {:params processed-params
                                                 :handler success
                                                 :response-format :json
                                                 :format :json
