@@ -44,6 +44,7 @@
 
 (defn icons [{:keys [:success :error]}]
   (GET (resource-url :icons) {:handler success
+                              :params {:page 0 :size 200}
                               :response-format :json
                               :keywords? true }))
 
