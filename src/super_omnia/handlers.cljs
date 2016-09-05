@@ -7,6 +7,7 @@
 
 (def initial-state {:open-categories #{}
                     :tree-root 0
+                    :current-project 8
                     :selected :elements
                     :action-menu-open? false
                     :action-modal-open? false
@@ -14,10 +15,10 @@
 
 (register-handler
  :initialise-db
- (fn [_ _]
+ (fn [_ project-id]
    (api/icons {:success #(dispatch [:process-resource-icons %1])})
-   (api/root 1 {:success #(dispatch [:process-root-request %1])})
-   initial-state))
+   (api/root project-id {:success #(dispatch [:process-root-request %1])})
+   (assoc initial-state :current-project project-id)))
 
 (register-handler
  :create-item
@@ -25,13 +26,13 @@
    (let [current-form (:current-element-form app-state)
          params (get-in app-state [:forms current-form])
          tree-root (:tree-root app-state)
+         project-id (:current-project app-state)
          remote-params (helpers/remote-params params tree-root)
          meta {:kind current-form :category-id tree-root}]
 
-     (api/create 1 tree-root current-form {:success #(dispatch [:process-new-item %1 meta])
-                                           :params remote-params}))
-   app-state
-   ))
+     (api/create project-id tree-root current-form {:success #(dispatch [:process-new-item %1 meta])
+                                                    :params remote-params}))
+   app-state))
 
 (register-handler
  :assoc-sugestion
@@ -39,14 +40,13 @@
    (let [current-form (:current-element-form app-state)
          params (get-in app-state [:forms current-form])
          tree-root (:tree-root app-state)
+         project-id (:current-project app-state)
          remote-params (helpers/assoc-remote-params params current-form)
          meta {:kind current-form :category-id tree-root}]
 
-     (api/create 1 tree-root current-form {:success #(dispatch [:process-new-item %1 meta])
-                                           :params remote-params})
-     app-state
-     )
-   ))
+     (api/create project-id tree-root current-form {:success #(dispatch [:process-new-item %1 meta])
+                                                    :params remote-params})
+     app-state)))
 
 (register-handler
  :icon-search

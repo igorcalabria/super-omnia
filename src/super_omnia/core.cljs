@@ -13,9 +13,8 @@
   (reagent/render-component [app]
                             (. js/document (getElementById "app"))))
 (defn ^:export main []
-  (dispatch-sync [:initialise-db])
-  (mount-root)
-  )
+  (dispatch-sync [:initialise-db 8])
+  (mount-root))
 
 (defn on-js-reload []
   (mount-root))
