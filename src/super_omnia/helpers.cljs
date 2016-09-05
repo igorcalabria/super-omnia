@@ -68,11 +68,10 @@
       (rename-keys {:selected-icon :resId :item-name :name})))
 
 (defn assoc-remote-params [params kind]
-  (let [key-name (if (= kind :assoc-action) :actionId :qualityId)]
-    (-> params
-        (replace-with-id :selected-icon)
-        (select-keys [:selected-icon])
-        (rename-keys {:selected-icon key-name}))))
+  (-> params
+      (replace-with-id :selected-icon)
+      (select-keys [:selected-icon])
+      (rename-keys {:selected-icon :id})))
 
 (defn translate-remote-attributes [item]
   (let [translation {:catId :root :relActionsId :actions :relQualitiesId :qualities}]
@@ -98,8 +97,13 @@
         (assoc-in [:elements (:id response)] response))))
 
 (defn add-new-sugestion [app-state response category-id kind]
-  (assoc-in app-state [kind] (:id response))
-  )
+  (let [current-suggestions (get app-state kind)
+        new-suggestions (hashfy-remote-list response)
+        [new-id _] (last new-suggestions)
+        category-suggestions (get-in app-state [:categories category-id kind])]
+    (-> app-state
+        (assoc-in [:categories category-id kind] (conj category-suggestions new-id))
+        (assoc kind (merge current-suggestions new-suggestions)))))
 
 (defn add-new-remote-item [app-state response {:keys [:kind :category-id]}]
   (cond
